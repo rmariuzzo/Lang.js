@@ -1,0 +1,25 @@
+{
+    "name": "lang.js",
+    "version": "1.2.1",
+    "description": "Laravel's Lang in JavaScript!",
+    "main": "src/lang.js",
+    "directories": {
+        "test": "tests"
+    },
+    "scripts": {
+        "test": "./node_modules/jasmine-node/bin/jasmine-node test/spec/",
+        "start": "./node_modules/jasmine-node/bin/jasmine-node test/spec/ --color --autotest --watch src/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/rmariuzzo/Lang.js.git"
+    },
+    "author": "rmariuzzo",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/rmariuzzo/Lang.js/issues"
+    },
+    "devDependencies": {
+        "jasmine-node": "~1.14.3"
+    }
+}

@@ -3,8 +3,8 @@
  *
  *  @version 1.1.0
  *  @license MIT
- *  @site    https://github.com/rmariuzzo/Laravel-JS-Localization
- *  @author  rmariuzzo
+ *  @site    https://github.com/rmariuzzo/Lang.js
+ *  @author  Rubens Mariuzzo <rubens@mariuzzo.com>
  */
 
 'use strict';
@@ -101,7 +101,7 @@
     Lang.prototype.choice = function(key, count, replacements) {
         // Set default values for parameters replace and locale
         replacements = typeof replacements !== 'undefined' ? replacements : {};
-        
+
         // The count must be replaced if found in the message
         replacements['count'] = count;
 

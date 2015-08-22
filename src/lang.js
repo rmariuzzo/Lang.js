@@ -63,7 +63,7 @@
             return key;
         }
 
-        var message = this._getMessage(key);
+        var message = this._getMessage(key, replacements);
         if (message === null) {
             return key;
         }

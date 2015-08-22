@@ -21,9 +21,9 @@ Different installation methods:
 
 ## Development
 
- # Fork this repository and clone it.
- # Create a branch from develop: `git checkout -b feature/xxxxxxx`
- # Submit a PR to be merge into develop branch.
+ 1. Fork this repository and clone it.
+ 2. Create a branch from develop: `git checkout -b feature/xxxxxxx`
+ 3. Submit a PR to be merge into develop branch.
 
 **[Get help!](https://gitter.im/rmariuzzo/Lang.js)**
 

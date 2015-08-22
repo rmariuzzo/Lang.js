@@ -13,7 +13,7 @@
 
     if (typeof define === 'function' && define.amd) {
         // AMD support.
-        define([], factory);
+        define([], new(factory()));
     } else if (typeof exports === 'object') {
         // NodeJS support.
         module.exports = new(factory())();

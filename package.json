@@ -1,11 +1,8 @@
 {
   "name": "lang.js",
-  "version": "1.2.1",
+  "version": "0.1.0",
   "description": "Laravel's Lang in JavaScript!",
   "main": "src/lang.js",
-  "directories": {
-    "test": "tests"
-  },
   "scripts": {
     "test": "./node_modules/jasmine-node/bin/jasmine-node test/spec/",
     "minify": "./node_modules/uglify-js/bin/uglifyjs src/lang.js --output dist/lang.min.js --comments --verbose",

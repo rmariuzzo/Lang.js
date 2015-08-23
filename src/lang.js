@@ -175,16 +175,16 @@
      * Parse a message key into components.
      *
      * @param key {string} The message key to parse.
-     *
+     * @param key {string} The message locale to parse
      * @return {object} A key object with source and entries properties.
      */
-    Lang.prototype._parseKey = function(key) {
-        if (typeof key !== 'string') {
+    Lang.prototype._parseKey = function(key, locale) {
+        if (typeof key !== 'string' || typeof locale !== 'string') {
             return null;
         }
         var segments = key.split('.');
         return {
-            source: this.getLocale() + '.' + segments[0],
+            source: locale + '.' + segments[0],
             entries: segments.slice(1)
         };
     };

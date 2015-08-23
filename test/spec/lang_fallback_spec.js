@@ -20,20 +20,19 @@ describe('The Lang\'s fallback methods', function() {
 
     });
     
-    it('should return default fallback',function() {
-       expect(Lang.getFallback()).toBe('en'); 
-    });
     it('should set default fallback',function() {
-        Lang.setFallback('fr'); 
-        expect(Lang.getFallback()).toBe('fr');
+        Lang.setFallback('es'); 
+        expect(Lang.getFallback()).toBe('es');
     });
     
+
+    
     it('should get the fallback expected message when active language does not contain a given language line',function() {
-       Lang.setLocale('es');
-       Lang.setFallback('en');
-       expect(Lang.get('messages.home')).toBe('Inicio');
-       expect(Lang.get("reminders.sent")).toBe('Password reminder sent!');
-       Lang.setLocale('en');
+        Lang.setLocale('es');
+        expect(Lang.get("reminders.sent")).toBe('reminders.sent');
+        Lang.setFallback('en');
+        expect(Lang.get("reminders.sent")).toBe('Password reminder sent!');   
+        Lang.setLocale('en');
     });
 
 

@@ -28,7 +28,6 @@
 
     var defaults = {
         defaultLocale: 'en', /** The default locale if not set. */
-        defaulFallbackLocale:'en'
     };
 
     // Constructor //
@@ -36,8 +35,6 @@
     var Lang = function(options) {
         options = options || {};
         this.defaultLocale = options.defaultLocale || defaults.defaultLocale;
-        this.defaulFallbackLocale = options.defaulFallbackLocale || defaults.defaulFallbackLocale;
-        
     };
 
     // Methods //
@@ -60,7 +57,7 @@
      * @return void
      */
     Lang.prototype.setFallback = function(fallback){
-        this.defaulFallbackLocale = fallback;
+        this.fallback = fallback;
     }
     
     /**
@@ -69,7 +66,7 @@
      * @return void
      */
     Lang.prototype.getFallback = function () {
-        return this.defaulFallbackLocale;  
+        return this.fallback;  
     };
     
     /**

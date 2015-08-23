@@ -193,12 +193,13 @@
      * Returns a translation message. Use `Lang.get()` method instead, this methods assumes the key exists.
      *
      * @param key {string} The key of the message.
-     *
+     * @param locale {string} The locale of the message
+     * 
      * @return {string} The translation message for the given key.
      */
-    Lang.prototype._getMessage = function(key) {
-
-        key = this._parseKey(key);
+    Lang.prototype._getMessage = function(key, locale) {
+        locale = locale || this.getLocale();
+        key = this._parseKey(key, locale);
 
         // Ensure message source exists.
         if (this.messages[key.source] === undefined) {

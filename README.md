@@ -16,7 +16,7 @@ Localization library written in JavaScript highly inspired on Laravel's Lang.
 Different installation methods:
 
  - Bower: `bower install lang.js`
- - NPM: `bower install lang.js`
+ - NPM: `npm install lang.js`
  - Manually: [Download latest release](https://github.com/rmariuzzo/Lang.js/releases/latest)
 
 ## Development

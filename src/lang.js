@@ -76,6 +76,18 @@
     };
 
     /**
+     * Returns a translation message.
+     *
+     * @param key {string} The key of the message.
+     * @param replacements {object} The replacements to be done in the message.
+     *
+     * @return {string} The translation message, if not found the given key.
+     */
+    Lang.prototype.trans = function(key, replacements) {
+        return this.get(key, replacements);
+    };
+
+    /**
      * Returns true if the key is defined on the messages source.
      *
      * @param key {string} The key of the message.

@@ -79,14 +79,16 @@
      * Returns true if the key is defined on the messages source.
      *
      * @param key {string} The key of the message.
-     *
+     * @param locale {string} The locale of the message
+     * 
      * @return {boolean} true if the given key is defined on the messages source, otherwise false.
      */
-    Lang.prototype.has = function(key) {
+    Lang.prototype.has = function(key, locale) {
         if (typeof key !== 'string' || !this.messages) {
             return false;
         }
-        return this._getMessage(key) !== null;
+        locale = locale || this.getLocale();
+        return this._getMessage(key, locale) !== null;
     };
 
     /**

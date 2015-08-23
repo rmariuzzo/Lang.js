@@ -28,7 +28,7 @@ describe('The Lang\'s fallback methods', function() {
         expect(Lang.getFallback()).toBe('fr');
     });
     
-    it('should get the fallback expected message when locale not exists',function() {
+    it('should get the fallback expected message when active language does not contain a given language line',function() {
        Lang.setLocale('es');
        Lang.setFallback('en');
        expect(Lang.get('messages.home')).toBe('Inicio');

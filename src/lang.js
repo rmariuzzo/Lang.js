@@ -163,6 +163,20 @@
         }
     };
 
+
+    /**
+     * This method is an alias to choice() method.
+     *
+     * @param key {string} The key of the message.
+     * @param count {integer} The number of elements.
+     * @param replacements {object} The replacements to be done in the message.
+     *
+     * @return {string} The translation message according to an integer value.
+     */
+    Lang.prototype.transChoice  = function(key, count, replacements) {
+        return this.choice(key, count, replacements);
+    };
+
     /**
      * Set the current locale.
      *

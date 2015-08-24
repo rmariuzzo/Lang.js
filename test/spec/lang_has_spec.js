@@ -33,12 +33,12 @@ describe('The lang.has() method', function () {
     });
 
     it('should return true when the given key and locale are defined', function() {
-        expect(Lang.has('messages.home', 'es')).toBe(true);
-        expect(Lang.has('messages.home', 'ht')).toBe(true);  
+        expect(lang.has('messages.home', 'es')).toBe(true);
+        expect(lang.has('messages.home', 'ht')).toBe(true);  
     });
 
     it('should return false when the locale of a existing key is not defined', function() {
-        expect(Lang.has('messages.home', 'bla')).toBe(false);
-        expect(Lang.has('validation.accepted', 'bla')).toBe(false);
+        expect(lang.has('messages.home', 'bla')).toBe(false);
+        expect(lang.has('validation.accepted', 'bla')).toBe(false);
     });
 });

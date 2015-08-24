@@ -34,7 +34,7 @@
 
     var Lang = function (options) {
         this.locale = options.locale || defaults.locale;
-        this.defaultLocale = options.defaultLocale;
+        this.fallback = options.fallback;
         this.messages = options.messages;
     };
 
@@ -50,16 +50,26 @@
     Lang.prototype.setMessages = function (messages) {
         this.messages = messages;
     };
+
     /**
-     * Set the fallback locale being used.
+     * Get the current locale.
      *
-     * @param string fallback
+     * @return {string} The current locale.
+     */
+    Lang.prototype.getLocale = function () {
+        return this.locale || options.defaultLocale;
+    };
+
+    /**
+     * Set the current locale.
+     *
+     * @param locale {string} The locale to set.
      *
      * @return void
      */
-    Lang.prototype.setFallback = function (fallback) {
-        this.fallback = fallback;
-    }
+    Lang.prototype.setLocale = function (locale) {
+        this.locale = locale;
+    };
 
     /**
      * Get the fallback locale being used.
@@ -71,7 +81,32 @@
     };
 
     /**
-     * Returns a translation message.
+     * Set the fallback locale being used.
+     *
+     * @param string fallback
+     *
+     * @return void
+     */
+    Lang.prototype.setFallback = function (fallback) {
+        this.fallback = fallback;
+    };
+
+    /**
+     * Indicate if a given key is defined on the messages source.
+     *
+     * @param key {string} The key of the message.
+     *
+     * @return {boolean} true if the given key is defined on the messages source, otherwise false.
+     */
+    Lang.prototype.has = function (key) {
+        if (typeof key !== 'string' || !this.messages) {
+            return false;
+        }
+        return this._getMessage(key) !== null;
+    };
+
+    /**
+     * Get a translation message.
      *
      * @param key {string} The key of the message.
      * @param replacements {object} The replacements to be done in the message.
@@ -96,7 +131,7 @@
     };
 
     /**
-     * Returns a translation message.
+     * This method act as an alias to get() method.
      *
      * @param key {string} The key of the message.
      * @param replacements {object} The replacements to be done in the message.
@@ -108,21 +143,7 @@
     };
 
     /**
-     * Returns true if the key is defined on the messages source.
-     *
-     * @param key {string} The key of the message.
-     *
-     * @return {boolean} true if the given key is defined on the messages source, otherwise false.
-     */
-    Lang.prototype.has = function (key) {
-        if (typeof key !== 'string' || !this.messages) {
-            return false;
-        }
-        return this._getMessage(key) !== null;
-    };
-
-    /**
-     * Gets the plural or singular form of the message specified based on an integer value.
+     * Get the plural or singular form of the message specified based on an integer value.
      *
      * @param key {string} The key of the message.
      * @param count {integer} The number of elements.
@@ -185,7 +206,7 @@
 
 
     /**
-     * This method is an alias to choice() method.
+     * This method act as an alias to choice() method.
      *
      * @param key {string} The key of the message.
      * @param count {integer} The number of elements.
@@ -195,26 +216,6 @@
      */
     Lang.prototype.transChoice = function (key, count, replacements) {
         return this.choice(key, count, replacements);
-    };
-
-    /**
-     * Set the current locale.
-     *
-     * @param locale {string} The locale to set.
-     *
-     * @return void
-     */
-    Lang.prototype.setLocale = function (locale) {
-        this.locale = locale;
-    };
-
-    /**
-     * Get the current locale.
-     *
-     * @return {string} The current locale.
-     */
-    Lang.prototype.getLocale = function () {
-        return this.locale || this.defaultLocale;
     };
 
     /**

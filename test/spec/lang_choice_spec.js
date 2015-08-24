@@ -1,10 +1,9 @@
-'use strict';
-
 var util = require('util');
 var Lang = require('../../src/lang.js');
 var messages = require('../fixture/messages');
 
 describe('The lang.choice() method', function () {
+    'use strict';
 
     var lang;
 

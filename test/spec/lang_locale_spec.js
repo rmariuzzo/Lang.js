@@ -1,10 +1,9 @@
-'use strict';
-
 var util = require('util');
 var Lang = require('../../src/lang.js');
 var messages = require('../fixture/messages');
 
 describe('The Lang\'s locale methods', function () {
+    'use strict';
 
     var lang;
 

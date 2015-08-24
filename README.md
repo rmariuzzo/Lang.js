@@ -31,7 +31,7 @@ var lang = new Lang({
 });
 ```
 
-To use `Lang.js` we need to specify at least the messages sources. This can be done during instantiation as shown in the previous code or later using the [`setMessages()`](#setMessages) method.
+To use `Lang.js` we need to specify at least the messages sources. This can be done during instantiation as shown in the previous code or later using the [`setMessages()`](#setmessages) method.
 
 ### Messages source format
 
@@ -59,9 +59,10 @@ See the sample used in tests located at: `test/fixture/messages.json`.
 
 #### `setMessages`
 
-Set messages source.
+Set messages source. Check [messages source format](#messages-source-format).
 
 ```js
+var lang = new Lang();
 lang.setMessages(source);
 ```
 

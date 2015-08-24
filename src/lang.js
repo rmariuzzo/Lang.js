@@ -7,9 +7,8 @@
  *  @author  Rubens Mariuzzo <rubens@mariuzzo.com>
  */
 
-'use strict';
-
 (function (root, factory) {
+    'use strict';
 
     if (typeof define === 'function' && define.amd) {
         // AMD support.
@@ -23,6 +22,7 @@
     }
 
 }(this, function () {
+    'use strict';
 
     // Default options //
 
@@ -156,7 +156,7 @@
         replacements = typeof replacements !== 'undefined' ? replacements : {};
 
         // The count must be replaced if found in the message
-        replacements['count'] = count;
+        replacements.count = count;
 
         // Message to get the plural or singular
         var message = this.get(key, replacements);
@@ -190,9 +190,9 @@
         }
 
         // Check the explicit rules
-        for (var i = 0; i < explicitRules.length; i++) {
-            if (this._testInterval(count, explicitRules[i])) {
-                return messageParts[i];
+        for (var j = 0; j < explicitRules.length; j++) {
+            if (this._testInterval(count, explicitRules[j])) {
+                return messageParts[j];
             }
         }
 

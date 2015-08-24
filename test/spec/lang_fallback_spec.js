@@ -1,10 +1,9 @@
-'use strict';
-
 var util = require('util');
 var Lang = require('../../src/lang.js');
 var messages = require('../fixture/messages');
 
 describe('The lang.fallback() method', function () {
+    'use strict';
 
     var lang;
 
@@ -30,8 +29,6 @@ describe('The lang.fallback() method', function () {
         lang.setFallback('es');
         expect(lang.getFallback()).toBe('es');
     });
-
-
 
     it('should get the fallback expected message when active language does not contain a given language line', function () {
         lang.setLocale('es');

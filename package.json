@@ -4,9 +4,9 @@
     "description": "Laravel's Lang in JavaScript!",
     "main": "src/lang.js",
     "scripts": {
-        "test": "./node_modules/jasmine-node/bin/jasmine-node test/spec/",
-        "test:watch": "./node_modules/jasmine-node/bin/jasmine-node test/spec/ --color --autotest --watch src/",
-        "minify": "./node_modules/uglify-js/bin/uglifyjs src/lang.js --output dist/lang.min.js --comments --verbose",
+        "test": "jasmine-node test/spec/",
+        "test:watch": "jasmine-node test/spec/ --color --autotest --watch src/",
+        "minify": "uglifyjs src/lang.js --output dist/lang.min.js --comments --verbose",
         "build:dist": "npm run test && npm run minify"
     },
     "repository": {

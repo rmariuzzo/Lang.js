@@ -4,33 +4,39 @@ var util = require('util');
 var Lang = require('../../src/lang.js');
 var messages = require('../fixture/messages');
 
-Lang.setMessages(messages);
+describe('The lang.transChoice() method', function () {
 
-describe('The Lang.transChoice() method', function () {
+    var lang;
+
+    beforeEach(function () {
+        lang = new Lang({
+            messages: messages
+        });
+    });
 
     it('should exists', function () {
-        expect(Lang.transChoice).toBeDefined();
+        expect(lang.transChoice).toBeDefined();
     });
 
     it('should be a function', function () {
-        expect(typeof Lang.transChoice).toBe('function');
+        expect(typeof lang.transChoice).toBe('function');
     });
 
     it('should return the passed key when not found', function () {
-        expect(Lang.transChoice('foo.bar', 1)).toBe(Lang.choice('foo.bar', 1));
-        expect(Lang.transChoice(null, 1)).toBe(Lang.choice(null, 1));
+        expect(lang.transChoice('foo.bar', 1)).toBe(lang.choice('foo.bar', 1));
+        expect(lang.transChoice(null, 1)).toBe(lang.choice(null, 1));
     });
 
     it('should return the expected message', function () {
-        expect(Lang.transChoice('messages.plural', 1)).toBe(Lang.choice('messages.plural', 1));
-        expect(Lang.transChoice('messages.plural', 10)).toBe(Lang.choice('messages.plural', 10));
+        expect(lang.transChoice('messages.plural', 1)).toBe(lang.choice('messages.plural', 1));
+        expect(lang.transChoice('messages.plural', 10)).toBe(lang.choice('messages.plural', 10));
     });
 
     it('should return the expected message with replacements', function () {
-        expect(Lang.transChoice('validation.accepted', 1)).toBe(Lang.choice('validation.accepted', 1));
-        expect(Lang.transChoice('validation.accepted', 1, {
+        expect(lang.transChoice('validation.accepted', 1)).toBe(lang.choice('validation.accepted', 1));
+        expect(lang.transChoice('validation.accepted', 1, {
             'attribute': 'foo'
-        })).toBe(Lang.choice('validation.accepted', 1, {
+        })).toBe(lang.choice('validation.accepted', 1, {
             'attribute': 'foo'
         }));
     });

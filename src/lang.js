@@ -9,32 +9,33 @@
 
 'use strict';
 
-(function(root, factory) {
+(function (root, factory) {
 
     if (typeof define === 'function' && define.amd) {
         // AMD support.
-        define([], new(factory()));
+        define([], factory());
     } else if (typeof exports === 'object') {
         // NodeJS support.
-        module.exports = new(factory())();
+        module.exports = factory();
     } else {
         // Browser global support.
-        root.Lang = new(factory())();
+        root.Lang = factory();
     }
 
-}(this, function() {
+}(this, function () {
 
     // Default options //
 
     var defaults = {
-        defaultLocale: 'en', /** The default locale if not set. */
+        locale: 'en' /** The default locale if not set. */
     };
 
     // Constructor //
 
-    var Lang = function(options) {
-        options = options || {};
-        this.defaultLocale = options.defaultLocale || defaults.defaultLocale;
+    var Lang = function (options) {
+        this.locale = options.locale || defaults.locale;
+        this.defaultLocale = options.defaultLocale;
+        this.messages = options.messages;
     };
 
     // Methods //
@@ -46,29 +47,29 @@
      *
      * @return void
      */
-    Lang.prototype.setMessages = function(messages) {
+    Lang.prototype.setMessages = function (messages) {
         this.messages = messages;
     };
     /**
      * Set the fallback locale being used.
-     * 
+     *
      * @param string fallback
-     * 
+     *
      * @return void
      */
-    Lang.prototype.setFallback = function(fallback){
+    Lang.prototype.setFallback = function (fallback) {
         this.fallback = fallback;
     }
-    
+
     /**
-     * Get the fallback locale being used. 
-     * 
+     * Get the fallback locale being used.
+     *
      * @return void
      */
     Lang.prototype.getFallback = function () {
-        return this.fallback;  
+        return this.fallback;
     };
-    
+
     /**
      * Returns a translation message.
      *
@@ -77,7 +78,7 @@
      *
      * @return {string} The translation message, if not found the given key.
      */
-    Lang.prototype.get = function(key, replacements) {
+    Lang.prototype.get = function (key, replacements) {
         if (!this.has(key)) {
             return key;
         }
@@ -102,7 +103,7 @@
      *
      * @return {string} The translation message, if not found the given key.
      */
-    Lang.prototype.trans = function(key, replacements) {
+    Lang.prototype.trans = function (key, replacements) {
         return this.get(key, replacements);
     };
 
@@ -113,7 +114,7 @@
      *
      * @return {boolean} true if the given key is defined on the messages source, otherwise false.
      */
-    Lang.prototype.has = function(key) {
+    Lang.prototype.has = function (key) {
         if (typeof key !== 'string' || !this.messages) {
             return false;
         }
@@ -129,7 +130,7 @@
      *
      * @return {string} The translation message according to an integer value.
      */
-    Lang.prototype.choice = function(key, count, replacements) {
+    Lang.prototype.choice = function (key, count, replacements) {
         // Set default values for parameters replace and locale
         replacements = typeof replacements !== 'undefined' ? replacements : {};
 
@@ -192,7 +193,7 @@
      *
      * @return {string} The translation message according to an integer value.
      */
-    Lang.prototype.transChoice  = function(key, count, replacements) {
+    Lang.prototype.transChoice = function (key, count, replacements) {
         return this.choice(key, count, replacements);
     };
 
@@ -203,7 +204,7 @@
      *
      * @return void
      */
-    Lang.prototype.setLocale = function(locale) {
+    Lang.prototype.setLocale = function (locale) {
         this.locale = locale;
     };
 
@@ -212,7 +213,7 @@
      *
      * @return {string} The current locale.
      */
-    Lang.prototype.getLocale = function() {
+    Lang.prototype.getLocale = function () {
         return this.locale || this.defaultLocale;
     };
 
@@ -223,11 +224,11 @@
      *
      * @return {object} A key object with source and entries properties.
      */
-    Lang.prototype._parseKey = function(key) {
+    Lang.prototype._parseKey = function (key) {
         if (typeof key !== 'string') {
             return null;
         }
-        
+
         var segments = key.split('.');
 
         return {
@@ -244,17 +245,17 @@
      *
      * @return {string} The translation message for the given key.
      */
-    Lang.prototype._getMessage = function(key) {
+    Lang.prototype._getMessage = function (key) {
 
         key = this._parseKey(key);
-      
+
         // Ensure message source exists.
-        if (this.messages[key.source] === undefined && this.messages[key.sourceFallback] === undefined ) {
+        if (this.messages[key.source] === undefined && this.messages[key.sourceFallback] === undefined) {
             return null;
         }
-           
+
         // Get message text.
-     
+
         var message = this.messages[key.source] || this.messages[key.sourceFallback];
 
         while (key.entries.length && (message = message[key.entries.shift()]));
@@ -262,7 +263,7 @@
         if (typeof message !== 'string') {
             return null;
         }
-     
+
         return message;
     };
 
@@ -274,7 +275,7 @@
      *
      * @return {string} The string message with replacements applied.
      */
-    Lang.prototype._applyReplacements = function(message, replacements) {
+    Lang.prototype._applyReplacements = function (message, replacements) {
         for (var replace in replacements) {
             message = message.split(':' + replace).join(replacements[replace]);
         }
@@ -288,7 +289,7 @@
      * @param  interval {string}    The interval to be compared with the count.
      * @return {boolean}    Returns true if count is within interval; false otherwise.
      */
-    Lang.prototype._testInterval = function(count, interval) {
+    Lang.prototype._testInterval = function (count, interval) {
         /**
          * From the Symfony\Component\Translation\Interval Docs
          *

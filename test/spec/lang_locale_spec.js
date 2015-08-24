@@ -4,35 +4,40 @@ var util = require('util');
 var Lang = require('../../src/lang.js');
 var messages = require('../fixture/messages');
 
-Lang.setMessages(messages);
+describe('The Lang\'s locale methods', function () {
 
-describe('The Lang\'s locale methods', function() {
+    var lang;
 
-    it('should have a getLocale', function() {
-        expect(Lang.getLocale).toBeDefined();
-        expect(typeof Lang.getLocale).toBe('function');
+    beforeEach(function () {
+        lang = new Lang({
+            messages: messages
+        });
     });
 
-    it('should have a setLocale', function() {
-        expect(Lang.setLocale).toBeDefined();
-        expect(typeof Lang.setLocale).toBe('function');
+    it('should have a getLocale', function () {
+        expect(lang.getLocale).toBeDefined();
+        expect(typeof lang.getLocale).toBe('function');
     });
 
-    it('should return the default locale', function() {
-        expect(Lang.getLocale()).toBe('en');
+    it('should have a setLocale', function () {
+        expect(lang.setLocale).toBeDefined();
+        expect(typeof lang.setLocale).toBe('function');
     });
 
-    it('should return the locale specified', function() {
-        Lang.setLocale('es');
-        expect(Lang.getLocale()).toBe('es');
+    it('should return the default locale', function () {
+        expect(lang.getLocale()).toBe('en');
     });
 
-    it('should affect messages', function() {
-        Lang.setLocale('es');
-        var es = Lang.get('messages.home');
-        Lang.setLocale('en');
-        var en = Lang.get('messages.home');
-        expect(es).not.toBe(en);
+    it('should return the locale specified', function () {
+        lang.setLocale('es');
+        expect(lang.getLocale()).toBe('es');
+    });
+
+    it('should affect messages', function () {
+        lang.setLocale('es');
+        var es = lang.get('messages.home');
+        lang.setLocale('en');
+        var en = lang.get('messages.home');
     });
 
 });

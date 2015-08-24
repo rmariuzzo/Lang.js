@@ -27,7 +27,7 @@
     // Default options //
 
     var defaults = {
-        defaultLocale: 'en' /** The default locale if not set. */
+        defaultLocale: 'en', /** The default locale if not set. */
     };
 
     // Constructor //
@@ -49,7 +49,26 @@
     Lang.prototype.setMessages = function(messages) {
         this.messages = messages;
     };
-
+    /**
+     * Set the fallback locale being used.
+     * 
+     * @param string fallback
+     * 
+     * @return void
+     */
+    Lang.prototype.setFallback = function(fallback){
+        this.fallback = fallback;
+    }
+    
+    /**
+     * Get the fallback locale being used. 
+     * 
+     * @return void
+     */
+    Lang.prototype.getFallback = function () {
+        return this.fallback;  
+    };
+    
     /**
      * Returns a translation message.
      *
@@ -208,9 +227,12 @@
         if (typeof key !== 'string') {
             return null;
         }
+        
         var segments = key.split('.');
+
         return {
             source: this.getLocale() + '.' + segments[0],
+            sourceFallback: this.getFallback() + '.' + segments[0],
             entries: segments.slice(1)
         };
     };
@@ -225,20 +247,22 @@
     Lang.prototype._getMessage = function(key) {
 
         key = this._parseKey(key);
-
+      
         // Ensure message source exists.
-        if (this.messages[key.source] === undefined) {
+        if (this.messages[key.source] === undefined && this.messages[key.sourceFallback] === undefined ) {
             return null;
         }
-
+           
         // Get message text.
-        var message = this.messages[key.source];
+     
+        var message = this.messages[key.source] || this.messages[key.sourceFallback];
+
         while (key.entries.length && (message = message[key.entries.shift()]));
 
         if (typeof message !== 'string') {
             return null;
         }
-
+     
         return message;
     };
 

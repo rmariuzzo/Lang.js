@@ -117,6 +117,9 @@
         "token": "This password reset token is invalid.",
         "sent": "Password reminder sent!"
     },
+    "en.fallback": {
+        "test" : "This is only for testing the fallback, please don't add support to other locale"
+    },
     "ht.messages": {
         "home": "Ak\u00e8y",
         "login": "Aksede",

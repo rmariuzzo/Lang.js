@@ -30,12 +30,12 @@ describe('The lang.fallback() method', function () {
         expect(lang.getFallback()).toBe('es');
     });
 
-    it('should get the fallback expected message when active language does not contain a given language line', function () {
-        lang.setLocale('es');
-        expect(lang.get("reminders.sent")).toBe('reminders.sent');
-        lang.setFallback('en');
-        expect(lang.get("reminders.sent")).toBe('Password reminder sent!');
+    it('should get the message in the setted fallback locale if the message does not exists in the defined locale', function () {
         lang.setLocale('en');
+        lang.setFallback('en');
+        var enMessage = lang.get('fallback.test');
+        lang.setLocale('es');
+        expect(lang.get('fallback.test')).toBe(enMessage);
     });
 
 

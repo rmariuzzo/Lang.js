@@ -92,18 +92,20 @@
     };
 
     /**
-     * Indicate if a given key is defined on the messages source.
+     * This method act as an alias to get() method.
      *
      * @param key {string} The key of the message.
-     *
+     * @param locale {string} The locale of the message
+     * 
      * @return {boolean} true if the given key is defined on the messages source, otherwise false.
      */
-    Lang.prototype.has = function (key) {
+    Lang.prototype.has = function(key, locale) {
         if (typeof key !== 'string' || !this.messages) {
             return false;
         }
-        return this._getMessage(key) !== null;
-    };
+        locale = locale || this.getLocale();
+        return this._getMessage(key, locale) !== null;
+    }
 
     /**
      * Get a translation message.
@@ -129,6 +131,7 @@
 
         return message;
     };
+
 
     /**
      * This method act as an alias to get() method.
@@ -222,18 +225,18 @@
      * Parse a message key into components.
      *
      * @param key {string} The message key to parse.
-     *
+     * @param key {string} The message locale to parse
      * @return {object} A key object with source and entries properties.
      */
-    Lang.prototype._parseKey = function (key) {
-        if (typeof key !== 'string') {
+    Lang.prototype._parseKey = function(key, locale) {
+        if (typeof key !== 'string' || typeof locale !== 'string') {
             return null;
         }
 
         var segments = key.split('.');
 
         return {
-            source: this.getLocale() + '.' + segments[0],
+            source: locale + '.' + segments[0],
             sourceFallback: this.getFallback() + '.' + segments[0],
             entries: segments.slice(1)
         };
@@ -243,12 +246,13 @@
      * Returns a translation message. Use `Lang.get()` method instead, this methods assumes the key exists.
      *
      * @param key {string} The key of the message.
-     *
+     * @param locale {string} The locale of the message
+     * 
      * @return {string} The translation message for the given key.
      */
-    Lang.prototype._getMessage = function (key) {
-
-        key = this._parseKey(key);
+    Lang.prototype._getMessage = function(key, locale) {
+        locale = locale || this.getLocale();
+        key = this._parseKey(key, locale);
 
         // Ensure message source exists.
         if (this.messages[key.source] === undefined && this.messages[key.sourceFallback] === undefined) {

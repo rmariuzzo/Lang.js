@@ -200,10 +200,10 @@
         }
 
         // Standard rules
-        if (count > 1) {
-            return messageParts[1];
-        } else {
+        if (count === 1) {
             return messageParts[0];
+        } else {
+            return messageParts[1];
         }
     };
 

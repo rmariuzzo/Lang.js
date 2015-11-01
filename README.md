@@ -144,11 +144,17 @@ var lang = new Lang({
     messages: {
         'en.greetings': {
             'hi': 'Hi'
+        },
+        'es.greetings': {
+            'hi': 'Hola'
         }
     }
 });
 
 lang.has('greetings.hi');
+// > true
+
+lang.has('greetings.hi', 'es');
 // > true
 
 lang.has('greetings.hello');
@@ -164,12 +170,18 @@ var lang = new Lang({
     messages: {
         'en.greetings': {
             'hi': 'Hi'
+        },
+        'es.greetings': {
+            'hi': 'Hola'
         }
     }
 });
 
 lang.get('greetings.hi');
 // > "Hi"
+
+lang.get('greetings.hi', {}, 'es');
+// > "Hola"
 
 lang.get('greetings.hello');
 // > "greetings.hello"
@@ -188,15 +200,21 @@ var lang = new Lang({
     messages: {
         'en.fruits': {
             'apple': 'apple|apples'
+        },
+        'es.greetings': {
+            'apple': 'manzana|manzanas'
         }
     }
 });
 
-lang.get('fruits.apple', 1);
+lang.choice('fruits.apple', 1);
 // > "apple"
 
-lang.get('fruits.apple', 4);
+lang.choice('fruits.apple', 4);
 // > "apples"
+
+lang.choice('fruits.apple', 4, {}, 'es');
+// > "manzanas"
 ```
 
 #### `transChoice`

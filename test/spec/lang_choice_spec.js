@@ -13,7 +13,6 @@ describe('The lang.choice() method', function () {
         });
     });
 
-
     it('should exists', function () {
         expect(lang.choice).toBeDefined();
     });
@@ -37,6 +36,11 @@ describe('The lang.choice() method', function () {
         expect(lang.choice('validation.accepted', 1, {
             'attribute': 'foo'
         })).toBe('The foo must be accepted.');
+    });
+
+    it('should return the expected message with changed locale', function() {
+        expect(lang.choice('messages.home', 1)).toBe('Home');
+        expect(lang.choice('messages.home', 1, {}, 'es')).toBe('Inicio');
     });
 
 });

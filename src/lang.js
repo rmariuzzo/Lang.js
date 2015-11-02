@@ -103,7 +103,7 @@
         if (typeof key !== 'string' || !this.messages) {
             return false;
         }
-        locale = locale || this.getLocale();
+        
         return this._getMessage(key, locale) !== null;
     }
 
@@ -112,15 +112,16 @@
      *
      * @param key {string} The key of the message.
      * @param replacements {object} The replacements to be done in the message.
+     * @param locale {string} The locale to use, if not passed use the default locale.
      *
      * @return {string} The translation message, if not found the given key.
      */
-    Lang.prototype.get = function (key, replacements) {
+    Lang.prototype.get = function (key, replacements, locale) {
         if (!this.has(key)) {
             return key;
         }
 
-        var message = this._getMessage(key);
+        var message = this._getMessage(key, locale);
         if (message === null) {
             return key;
         }
@@ -146,23 +147,24 @@
     };
 
     /**
-     * Get the plural or singular form of the message specified based on an integer value.
+     * Gets the plural or singular form of the message specified based on an integer value.
      *
      * @param key {string} The key of the message.
-     * @param count {integer} The number of elements.
+     * @param number {integer} The number of elements.
      * @param replacements {object} The replacements to be done in the message.
+     * @param locale {string} The locale to use, if not passed use the default locale.
      *
      * @return {string} The translation message according to an integer value.
      */
-    Lang.prototype.choice = function (key, count, replacements) {
+    Lang.prototype.choice = function (key, number, replacements, locale) {
         // Set default values for parameters replace and locale
         replacements = typeof replacements !== 'undefined' ? replacements : {};
 
         // The count must be replaced if found in the message
-        replacements.count = count;
+        replacements.count = number;
 
         // Message to get the plural or singular
-        var message = this.get(key, replacements);
+        var message = this.get(key, replacements, locale);
 
         // Check if message is not null or undefined
         if (message === null || message === undefined) {
@@ -194,13 +196,13 @@
 
         // Check the explicit rules
         for (var j = 0; j < explicitRules.length; j++) {
-            if (this._testInterval(count, explicitRules[j])) {
+            if (this._testInterval(number, explicitRules[j])) {
                 return messageParts[j];
             }
         }
 
         // Standard rules
-        if (count === 1) {
+        if (number === 1) {
             return messageParts[0];
         } else {
             return messageParts[1];

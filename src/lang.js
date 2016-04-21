@@ -262,23 +262,28 @@
     Lang.prototype._getMessage = function(key, locale) {
         var currentLocale = locale || this.getLocale();
         var parsedKey = this._parseKey(key, currentLocale);
+        var message = null;
+        var transKey = null;
 
-        // Ensure message source exists.
-        if (
-            // check that the section AND the key exist, otherwise fallback
-            (this.messages[parsedKey.source] === undefined || (parsedKey.entries[0] && this.messages[parsedKey.source][parsedKey.entries[0]] === undefined))
-            && this.messages[parsedKey.sourceFallback] === undefined
-        ) {
+        if (parsedKey.entries[0] === undefined){
             return null;
         }
+        else {
+            transKey = parsedKey.entries[0];
+        }
 
-        // Get message text
-        var message = this.messages[parsedKey.source] || this.messages[parsedKey.sourceFallback];
-
-        while (parsedKey.entries.length && (message = message[parsedKey.entries.shift()]));
-
-        if (typeof message !== 'string') {
-            return null;
+        // check that the section AND the key exist, otherwise fallback
+        if (
+            this.messages[parsedKey.source] !== undefined
+            && this.messages[parsedKey.source][transKey] !== undefined
+        ) {
+            message = this.messages[parsedKey.source][transKey];
+        }
+        else if (
+            this.messages[parsedKey.sourceFallback] !== undefined
+            && this.messages[parsedKey.sourceFallback][transKey] !== undefined
+        ) {
+            message = this.messages[parsedKey.sourceFallback][transKey];
         }
 
         return message;

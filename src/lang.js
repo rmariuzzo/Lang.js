@@ -63,7 +63,7 @@
      * @return {string} The current locale.
      */
     Lang.prototype.getLocale = function () {
-        return this.locale || options.defaultLocale;
+        return this.locale;
     };
 
     /**

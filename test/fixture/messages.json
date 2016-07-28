@@ -111,6 +111,9 @@
         "previous": "&laquo; Previous",
         "next": "Next &raquo;"
     },
+    "en.plural": {
+        "year": ":count year|:count years"
+    },
     "en.reminders": {
         "password": "Passwords must be at least six characters and match the confirmation.",
         "user": "We can't find a user with that e-mail address.",
@@ -189,5 +192,8 @@
         "save": "Guardar",
         "language": "Idioma",
         "settingsSaved": "Configuraci\u00f3n guardada satisfactoriamente!"
+    },
+    "ru.plural": {
+        "year": ":count год|:count года|:count лет"
     }
 }

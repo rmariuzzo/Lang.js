@@ -3,4 +3,4 @@ node_js:
     - "0.10"
 install:
     - npm install
-script: npm run build:dist
+script: npm run build

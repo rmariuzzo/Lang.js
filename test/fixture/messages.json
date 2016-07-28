@@ -123,6 +123,9 @@
     "en.fallback": {
         "test" : "This is only for testing the fallback, please don't add support to other locale"
     },
+    "en.forum.thread": {
+        "viewAllThreads": "View all threads"
+    },
     "ht.messages": {
         "home": "Ak\u00e8y",
         "login": "Aksede",

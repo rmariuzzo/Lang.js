@@ -27,14 +27,20 @@
     // Default options //
 
     var defaults = {
-        locale: 'en' /** The default locale if not set. */
+        locale: 'en', /** The default locale if not set. */
+        fallback: 'en' /** The default fallback locale if not set. */
     };
 
+    var options;
+    var locale;
+    var fallback;
+    var messages;
+    
     // Constructor //
 
     var Lang = function (options) {
         this.locale = options.locale || defaults.locale;
-        this.fallback = options.fallback;
+        this.fallback = options.fallback || defaults.fallback;
         this.messages = options.messages;
     };
 
@@ -57,7 +63,7 @@
      * @return {string} The current locale.
      */
     Lang.prototype.getLocale = function () {
-        return this.locale || options.defaultLocale;
+        return this.locale;
     };
 
     /**
@@ -74,7 +80,7 @@
     /**
      * Get the fallback locale being used.
      *
-     * @return void
+     * @return string
      */
     Lang.prototype.getFallback = function () {
         return this.fallback;
@@ -83,7 +89,7 @@
     /**
      * Set the fallback locale being used.
      *
-     * @param string fallback
+     * @param fallback {string} fallback locale
      *
      * @return void
      */
@@ -105,7 +111,7 @@
         }
         
         return this._getMessage(key, locale) !== null;
-    }
+    };
 
     /**
      * Get a translation message.
@@ -150,7 +156,7 @@
      * Gets the plural or singular form of the message specified based on an integer value.
      *
      * @param key {string} The key of the message.
-     * @param number {integer} The number of elements.
+     * @param number {int} The number of elements.
      * @param replacements {object} The replacements to be done in the message.
      * @param locale {string} The locale to use, if not passed use the default locale.
      *
@@ -211,7 +217,7 @@
      * This method act as an alias to choice() method.
      *
      * @param key {string} The key of the message.
-     * @param count {integer} The number of elements.
+     * @param count {int} The number of elements.
      * @param replacements {object} The replacements to be done in the message.
      *
      * @return {string} The translation message according to an integer value.
@@ -224,7 +230,8 @@
      * Parse a message key into components.
      *
      * @param key {string} The message key to parse.
-     * @param key {string} The message locale to parse
+     * @param locale {string} The message locale to parse
+     * 
      * @return {object} A key object with source and entries properties.
      */
     Lang.prototype._parseKey = function(key, locale) {
@@ -247,25 +254,33 @@
      * @param key {string} The key of the message.
      * @param locale {string} The locale of the message
      * 
-     * @return {string} The translation message for the given key.
+     * @return {string|null} The translation message for the given key.
      */
     Lang.prototype._getMessage = function(key, locale) {
-        locale = locale || this.getLocale();
-        key = this._parseKey(key, locale);
+        var currentLocale = locale || this.getLocale();
+        var parsedKey = this._parseKey(key, currentLocale);
+        var message = null;
+        var transKey = null;
 
-        // Ensure message source exists.
-        if (this.messages[key.source] === undefined && this.messages[key.sourceFallback] === undefined) {
+        if (parsedKey.entries[0] === undefined){
             return null;
         }
+        else {
+            transKey = parsedKey.entries[0];
+        }
 
-        // Get message text.
-
-        var message = this.messages[key.source] || this.messages[key.sourceFallback];
-
-        while (key.entries.length && (message = message[key.entries.shift()]));
-
-        if (typeof message !== 'string') {
-            return null;
+        // check that the section AND the key exist, otherwise fallback
+        if (
+            this.messages[parsedKey.source] !== undefined
+            && this.messages[parsedKey.source][transKey] !== undefined
+        ) {
+            message = this.messages[parsedKey.source][transKey];
+        }
+        else if (
+            this.messages[parsedKey.sourceFallback] !== undefined
+            && this.messages[parsedKey.sourceFallback][transKey] !== undefined
+        ) {
+            message = this.messages[parsedKey.sourceFallback][transKey];
         }
 
         return message;

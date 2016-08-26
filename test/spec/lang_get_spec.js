@@ -47,4 +47,8 @@ describe('The lang.get() method', function () {
         })).toBe('The foo must be accepted.');
     });
 
+    it('should return the expected message with changed locale', function() {
+        expect(lang.get('messages.home')).toBe('Home');
+        expect(lang.get('messages.home', {}, 'es')).toBe('Inicio');
+    });
 });

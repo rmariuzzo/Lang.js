@@ -35,6 +35,10 @@ describe('The lang.trans() method', function () {
         expect(lang.trans('messages.family.children.son')).toBe('Jimmy');
     });
 
+    it('should return the expected message inside nested directory', function () {
+        expect(lang.trans('forum/thread.viewAllThreads')).toBe('View all threads');
+    });
+
     it('should return the passed key when nested message does not point to a message', function () {
         expect(lang.trans('messages.family.children')).toBe('messages.family.children');
         expect(lang.trans('a.b.c.d.f.g.h.i.j.k')).toBe('a.b.c.d.f.g.h.i.j.k');

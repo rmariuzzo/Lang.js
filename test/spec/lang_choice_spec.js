@@ -13,7 +13,6 @@ describe('The lang.choice() method', function () {
         });
     });
 
-
     it('should exists', function () {
         expect(lang.choice).toBeDefined();
     });
@@ -32,11 +31,28 @@ describe('The lang.choice() method', function () {
         expect(lang.choice('messages.plural', 10)).toBe('a million apples');
     });
 
+    it('should return the expected message', function () {
+        lang.setLocale('en');
+        expect(lang.choice('plural.year', 1)).toBe('1 year');
+        expect(lang.choice('plural.year', 2)).toBe('2 years');
+        expect(lang.choice('plural.year', 5)).toBe('5 years');
+
+        lang.setLocale('ru');
+        expect(lang.choice('plural.year', 1)).toBe('1 год');
+        expect(lang.choice('plural.year', 2)).toBe('2 года');
+        expect(lang.choice('plural.year', 5)).toBe('5 лет');
+    });
+
     it('should return the expected message with replacements', function () {
         expect(lang.choice('validation.accepted', 1)).toBe('The :attribute must be accepted.');
         expect(lang.choice('validation.accepted', 1, {
             'attribute': 'foo'
         })).toBe('The foo must be accepted.');
+    });
+
+    it('should return the expected message with changed locale', function() {
+        expect(lang.choice('messages.home', 1)).toBe('Home');
+        expect(lang.choice('messages.home', 1, {}, 'es')).toBe('Inicio');
     });
 
 });

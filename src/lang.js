@@ -83,7 +83,7 @@
     /**
      * Set the fallback locale being used.
      *
-     * @param string fallback
+     * @param fallback {string} The fallback locale.
      *
      * @return void
      */
@@ -146,7 +146,7 @@
      * Get the plural or singular form of the message specified based on an integer value.
      *
      * @param key {string} The key of the message.
-     * @param count {integer} The number of elements.
+     * @param count {number} The number of elements.
      * @param replacements {object} The replacements to be done in the message.
      *
      * @return {string} The translation message according to an integer value.
@@ -209,7 +209,7 @@
      * This method act as an alias to choice() method.
      *
      * @param key {string} The key of the message.
-     * @param count {integer} The number of elements.
+     * @param count {number} The number of elements.
      * @param replacements {object} The replacements to be done in the message.
      *
      * @return {string} The translation message according to an integer value.

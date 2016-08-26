@@ -111,11 +111,20 @@
         "previous": "&laquo; Previous",
         "next": "Next &raquo;"
     },
+    "en.plural": {
+        "year": ":count year|:count years"
+    },
     "en.reminders": {
         "password": "Passwords must be at least six characters and match the confirmation.",
         "user": "We can't find a user with that e-mail address.",
         "token": "This password reset token is invalid.",
         "sent": "Password reminder sent!"
+    },
+    "en.fallback": {
+        "test" : "This is only for testing the fallback, please don't add support to other locale"
+    },
+    "en.forum.thread": {
+        "viewAllThreads": "View all threads"
     },
     "ht.messages": {
         "home": "Ak\u00e8y",
@@ -186,5 +195,8 @@
         "save": "Guardar",
         "language": "Idioma",
         "settingsSaved": "Configuraci\u00f3n guardada satisfactoriamente!"
+    },
+    "ru.plural": {
+        "year": ":count год|:count года|:count лет"
     }
 }

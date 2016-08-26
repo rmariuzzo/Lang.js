@@ -1,40 +1,41 @@
 /*!
  *  Lang.js for Laravel localization in JavaScript.
  *
- *  @version 1.0.0
+ *  @version 1.1.0
  *  @license MIT
  *  @site    https://github.com/rmariuzzo/Lang.js
  *  @author  Rubens Mariuzzo <rubens@mariuzzo.com>
  */
 
-'use strict';
-
-(function(root, factory) {
+(function (root, factory) {
+    'use strict';
 
     if (typeof define === 'function' && define.amd) {
         // AMD support.
-        define([], new(factory()));
+        define([], factory());
     } else if (typeof exports === 'object') {
         // NodeJS support.
-        module.exports = new(factory())();
+        module.exports = factory();
     } else {
         // Browser global support.
-        root.Lang = new(factory())();
+        root.Lang = factory();
     }
 
-}(this, function() {
+}(this, function () {
+    'use strict';
 
     // Default options //
 
     var defaults = {
-        defaultLocale: 'en' /** The default locale if not set. */
+        locale: 'en' /** The default locale if not set. */
     };
 
     // Constructor //
 
-    var Lang = function(options) {
-        options = options || {};
-        this.defaultLocale = options.defaultLocale || defaults.defaultLocale;
+    var Lang = function (options) {
+        this.locale = options.locale || defaults.locale;
+        this.fallback = options.fallback;
+        this.messages = options.messages;
     };
 
     // Methods //
@@ -46,24 +47,81 @@
      *
      * @return void
      */
-    Lang.prototype.setMessages = function(messages) {
+    Lang.prototype.setMessages = function (messages) {
         this.messages = messages;
     };
 
     /**
-     * Returns a translation message.
+     * Get the current locale.
+     *
+     * @return {string} The current locale.
+     */
+    Lang.prototype.getLocale = function () {
+        return this.locale || options.defaultLocale;
+    };
+
+    /**
+     * Set the current locale.
+     *
+     * @param locale {string} The locale to set.
+     *
+     * @return void
+     */
+    Lang.prototype.setLocale = function (locale) {
+        this.locale = locale;
+    };
+
+    /**
+     * Get the fallback locale being used.
+     *
+     * @return void
+     */
+    Lang.prototype.getFallback = function () {
+        return this.fallback;
+    };
+
+    /**
+     * Set the fallback locale being used.
+     *
+     * @param fallback {string} The fallback locale.
+     *
+     * @return void
+     */
+    Lang.prototype.setFallback = function (fallback) {
+        this.fallback = fallback;
+    };
+
+    /**
+     * This method act as an alias to get() method.
+     *
+     * @param key {string} The key of the message.
+     * @param locale {string} The locale of the message
+     *
+     * @return {boolean} true if the given key is defined on the messages source, otherwise false.
+     */
+    Lang.prototype.has = function(key, locale) {
+        if (typeof key !== 'string' || !this.messages) {
+            return false;
+        }
+
+        return this._getMessage(key, locale) !== null;
+    }
+
+    /**
+     * Get a translation message.
      *
      * @param key {string} The key of the message.
      * @param replacements {object} The replacements to be done in the message.
+     * @param locale {string} The locale to use, if not passed use the default locale.
      *
      * @return {string} The translation message, if not found the given key.
      */
-    Lang.prototype.get = function(key, replacements) {
+    Lang.prototype.get = function (key, replacements, locale) {
         if (!this.has(key)) {
             return key;
         }
 
-        var message = this._getMessage(key, replacements);
+        var message = this._getMessage(key, locale);
         if (message === null) {
             return key;
         }
@@ -75,38 +133,38 @@
         return message;
     };
 
+
     /**
-     * Returns true if the key is defined on the messages source.
+     * This method act as an alias to get() method.
      *
      * @param key {string} The key of the message.
+     * @param replacements {object} The replacements to be done in the message.
      *
-     * @return {boolean} true if the given key is defined on the messages source, otherwise false.
+     * @return {string} The translation message, if not found the given key.
      */
-    Lang.prototype.has = function(key) {
-        if (typeof key !== 'string' || !this.messages) {
-            return false;
-        }
-        return this._getMessage(key) !== null;
+    Lang.prototype.trans = function (key, replacements) {
+        return this.get(key, replacements);
     };
 
     /**
      * Gets the plural or singular form of the message specified based on an integer value.
      *
      * @param key {string} The key of the message.
-     * @param count {integer} The number of elements.
+     * @param count {number} The number of elements.
      * @param replacements {object} The replacements to be done in the message.
+     * @param locale {string} The locale to use, if not passed use the default locale.
      *
      * @return {string} The translation message according to an integer value.
      */
-    Lang.prototype.choice = function(key, count, replacements) {
+    Lang.prototype.choice = function (key, number, replacements, locale) {
         // Set default values for parameters replace and locale
         replacements = typeof replacements !== 'undefined' ? replacements : {};
 
         // The count must be replaced if found in the message
-        replacements['count'] = count;
+        replacements.count = number;
 
         // Message to get the plural or singular
-        var message = this.get(key, replacements);
+        var message = this.get(key, replacements, locale);
 
         // Check if message is not null or undefined
         if (message === null || message === undefined) {
@@ -137,54 +195,48 @@
         }
 
         // Check the explicit rules
-        for (var i = 0; i < explicitRules.length; i++) {
-            if (this._testInterval(count, explicitRules[i])) {
-                return messageParts[i];
+        for (var j = 0; j < explicitRules.length; j++) {
+            if (this._testInterval(number, explicitRules[j])) {
+                return messageParts[j];
             }
         }
 
-        // Standard rules
-        if (count > 1) {
-            return messageParts[1];
-        } else {
-            return messageParts[0];
-        }
+        var pluralForm = this._getPluralForm(number);
+
+        return messageParts[pluralForm];
     };
 
-    /**
-     * Set the current locale.
-     *
-     * @param locale {string} The locale to set.
-     *
-     * @return void
-     */
-    Lang.prototype.setLocale = function(locale) {
-        this.locale = locale;
-    };
 
     /**
-     * Get the current locale.
+     * This method act as an alias to choice() method.
      *
-     * @return {string} The current locale.
+     * @param key {string} The key of the message.
+     * @param count {number} The number of elements.
+     * @param replacements {object} The replacements to be done in the message.
+     *
+     * @return {string} The translation message according to an integer value.
      */
-    Lang.prototype.getLocale = function() {
-        return this.locale || this.defaultLocale;
+    Lang.prototype.transChoice = function (key, count, replacements) {
+        return this.choice(key, count, replacements);
     };
 
     /**
      * Parse a message key into components.
      *
      * @param key {string} The message key to parse.
-     *
+     * @param key {string} The message locale to parse
      * @return {object} A key object with source and entries properties.
      */
-    Lang.prototype._parseKey = function(key) {
-        if (typeof key !== 'string') {
+    Lang.prototype._parseKey = function(key, locale) {
+        if (typeof key !== 'string' || typeof locale !== 'string') {
             return null;
         }
+
         var segments = key.split('.');
+
         return {
-            source: this.getLocale() + '.' + segments[0],
+            source: locale + '.' + segments[0].replace('/', '.'),
+            sourceFallback: this.getFallback() + '.' + segments[0].replace('/', '.'),
             entries: segments.slice(1)
         };
     };
@@ -193,20 +245,23 @@
      * Returns a translation message. Use `Lang.get()` method instead, this methods assumes the key exists.
      *
      * @param key {string} The key of the message.
+     * @param locale {string} The locale of the message
      *
      * @return {string} The translation message for the given key.
      */
-    Lang.prototype._getMessage = function(key) {
-
-        key = this._parseKey(key);
+    Lang.prototype._getMessage = function(key, locale) {
+        locale = locale || this.getLocale();
+        key = this._parseKey(key, locale);
 
         // Ensure message source exists.
-        if (this.messages[key.source] === undefined) {
+        if (this.messages[key.source] === undefined && this.messages[key.sourceFallback] === undefined) {
             return null;
         }
 
         // Get message text.
-        var message = this.messages[key.source];
+
+        var message = this.messages[key.source] || this.messages[key.sourceFallback];
+
         while (key.entries.length && (message = message[key.entries.shift()]));
 
         if (typeof message !== 'string') {
@@ -224,7 +279,7 @@
      *
      * @return {string} The string message with replacements applied.
      */
-    Lang.prototype._applyReplacements = function(message, replacements) {
+    Lang.prototype._applyReplacements = function (message, replacements) {
         for (var replace in replacements) {
             message = message.split(':' + replace).join(replacements[replace]);
         }
@@ -238,7 +293,7 @@
      * @param  interval {string}    The interval to be compared with the count.
      * @return {boolean}    Returns true if count is within interval; false otherwise.
      */
-    Lang.prototype._testInterval = function(count, interval) {
+    Lang.prototype._testInterval = function (count, interval) {
         /**
          * From the Symfony\Component\Translation\Interval Docs
          *
@@ -251,6 +306,149 @@
          */
 
         return false;
+    };
+
+    /**
+     * Returns the plural position to use for the given locale and number.
+     *
+     * The plural rules are derived from code of the Zend Framework (2010-09-25),
+     * which is subject to the new BSD license (http://framework.zend.com/license/new-bsd).
+     * Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+     *
+     * @param {Number} count
+     * @return {Number}
+     */
+    Lang.prototype._getPluralForm = function (count) {
+        switch (this.locale) {
+            case 'az':
+            case 'bo':
+            case 'dz':
+            case 'id':
+            case 'ja':
+            case 'jv':
+            case 'ka':
+            case 'km':
+            case 'kn':
+            case 'ko':
+            case 'ms':
+            case 'th':
+            case 'tr':
+            case 'vi':
+            case 'zh':
+                return 0;
+
+            case 'af':
+            case 'bn':
+            case 'bg':
+            case 'ca':
+            case 'da':
+            case 'de':
+            case 'el':
+            case 'en':
+            case 'eo':
+            case 'es':
+            case 'et':
+            case 'eu':
+            case 'fa':
+            case 'fi':
+            case 'fo':
+            case 'fur':
+            case 'fy':
+            case 'gl':
+            case 'gu':
+            case 'ha':
+            case 'he':
+            case 'hu':
+            case 'is':
+            case 'it':
+            case 'ku':
+            case 'lb':
+            case 'ml':
+            case 'mn':
+            case 'mr':
+            case 'nah':
+            case 'nb':
+            case 'ne':
+            case 'nl':
+            case 'nn':
+            case 'no':
+            case 'om':
+            case 'or':
+            case 'pa':
+            case 'pap':
+            case 'ps':
+            case 'pt':
+            case 'so':
+            case 'sq':
+            case 'sv':
+            case 'sw':
+            case 'ta':
+            case 'te':
+            case 'tk':
+            case 'ur':
+            case 'zu':
+                return (count == 1) ? 0 : 1;
+
+            case 'am':
+            case 'bh':
+            case 'fil':
+            case 'fr':
+            case 'gun':
+            case 'hi':
+            case 'hy':
+            case 'ln':
+            case 'mg':
+            case 'nso':
+            case 'xbr':
+            case 'ti':
+            case 'wa':
+                return ((count == 0) || (count == 1)) ? 0 : 1;
+
+            case 'be':
+            case 'bs':
+            case 'hr':
+            case 'ru':
+            case 'sr':
+            case 'uk':
+                return ((count % 10 == 1) && (count % 100 != 11)) ? 0 : (((count % 10 >= 2) && (count % 10 <= 4) && ((count % 100 < 10) || (count % 100 >= 20))) ? 1 : 2);
+
+            case 'cs':
+            case 'sk':
+                return (count == 1) ? 0 : (((count >= 2) && (count <= 4)) ? 1 : 2);
+
+            case 'ga':
+                return (count == 1) ? 0 : ((count == 2) ? 1 : 2);
+
+            case 'lt':
+                return ((count % 10 == 1) && (count % 100 != 11)) ? 0 : (((count % 10 >= 2) && ((count % 100 < 10) || (count % 100 >= 20))) ? 1 : 2);
+
+            case 'sl':
+                return (count % 100 == 1) ? 0 : ((count % 100 == 2) ? 1 : (((count % 100 == 3) || (count % 100 == 4)) ? 2 : 3));
+
+            case 'mk':
+                return (count % 10 == 1) ? 0 : 1;
+
+            case 'mt':
+                return (count == 1) ? 0 : (((count == 0) || ((count % 100 > 1) && (count % 100 < 11))) ? 1 : (((count % 100 > 10) && (count % 100 < 20)) ? 2 : 3));
+
+            case 'lv':
+                return (count == 0) ? 0 : (((count % 10 == 1) && (count % 100 != 11)) ? 1 : 2);
+
+            case 'pl':
+                return (count == 1) ? 0 : (((count % 10 >= 2) && (count % 10 <= 4) && ((count % 100 < 12) || (count % 100 > 14))) ? 1 : 2);
+
+            case 'cy':
+                return (count == 1) ? 0 : ((count == 2) ? 1 : (((count == 8) || (count == 11)) ? 2 : 3));
+
+            case 'ro':
+                return (count == 1) ? 0 : (((count == 0) || ((count % 100 > 0) && (count % 100 < 20))) ? 1 : 2);
+
+            case 'ar':
+                return (count == 0) ? 0 : ((count == 1) ? 1 : ((count == 2) ? 2 : (((count % 100 >= 3) && (count % 100 <= 10)) ? 3 : (((count % 100 >= 11) && (count % 100 <= 99)) ? 4 : 5))));
+
+            default:
+                return 0;
+        }
     };
 
     return Lang;

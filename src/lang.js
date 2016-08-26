@@ -1,7 +1,7 @@
 /*!
  *  Lang.js for Laravel localization in JavaScript.
  *
- *  @version 1.0.0
+ *  @version 1.1.0
  *  @license MIT
  *  @site    https://github.com/rmariuzzo/Lang.js
  *  @author  Rubens Mariuzzo <rubens@mariuzzo.com>

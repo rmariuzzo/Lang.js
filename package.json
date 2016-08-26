@@ -1,29 +1,30 @@
 {
-    "name": "lang.js",
-    "version": "1.0.0",
-    "description": "Laravel's Lang in JavaScript!",
-    "main": "src/lang.js",
-    "scripts": {
-        "test": "jasmine-node test/spec/",
-        "test:watch": "jasmine-node test/spec/ --color --autotest --watch src/",
-        "minify": "uglifyjs src/lang.js --output dist/lang.min.js --comments --verbose",
-        "jshint": "npm run jshint:src && npm run jshint:test",
-        "jshint:src": "jshint src/",
-        "jshint:test": "jshint test/",
-        "build": "npm run test && npm run minify"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/rmariuzzo/Lang.js.git"
-    },
-    "author": "rmariuzzo",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/rmariuzzo/Lang.js/issues"
-    },
-    "devDependencies": {
-        "jasmine-node": "~1.14.3",
-        "jshint": "^2.8.0",
-        "uglify-js": "^2.4.24"
-    }
+  "name": "lang.js",
+  "version": "1.0.0",
+  "description": "Laravel's Lang in JavaScript!",
+  "main": "src/lang.js",
+  "scripts": {
+    "test": "jasmine-node test/spec/",
+    "test:watch": "jasmine-node test/spec/ --color --autotest --watch src/",
+    "minify": "uglifyjs src/lang.js --output dist/lang.min.js --comments --verbose",
+    "jshint": "npm run jshint:src && npm run jshint:test",
+    "jshint:src": "jshint src/",
+    "jshint:test": "jshint test/",
+    "build": "npm run test && npm run minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rmariuzzo/Lang.js.git"
+  },
+  "author": "rmariuzzo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rmariuzzo/Lang.js/issues"
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "jasmine-node": "~1.14.3",
+    "jshint": "^2.8.0",
+    "uglify-js": "^2.4.24"
+  }
 }

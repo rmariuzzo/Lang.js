@@ -1,6 +1,6 @@
 {
   "name": "lang.js",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Laravel's Lang in JavaScript!",
   "main": "src/lang.js",
   "scripts": {
@@ -22,7 +22,6 @@
     "url": "https://github.com/rmariuzzo/Lang.js/issues"
   },
   "devDependencies": {
-    "babel-eslint": "^6.1.2",
     "jasmine-node": "~1.14.3",
     "jshint": "^2.8.0",
     "uglify-js": "^2.4.24"

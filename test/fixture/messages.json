@@ -126,6 +126,9 @@
     "en.forum.thread": {
         "viewAllThreads": "View all threads"
     },
+    "en.dir1.dir2.child": {
+        "deeplynestedmessage": "Message from file 2 directories down"
+    },
     "ht.messages": {
         "home": "Ak\u00e8y",
         "login": "Aksede",

@@ -236,8 +236,8 @@
         var segments = key.split('.');
 
         return {
-            source: locale + '.' + segments[0].replace('/', '.'),
-            sourceFallback: this.getFallback() + '.' + segments[0].replace('/', '.'),
+            source: locale + '.' + segments[0].replace(/\//g, '.'),
+            sourceFallback: this.getFallback() + '.' + segments[0].replace(/\//g, '.'),
             entries: segments.slice(1)
         };
     };

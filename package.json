@@ -24,6 +24,7 @@
   "devDependencies": {
     "jasmine-node": "~1.14.3",
     "jshint": "^2.8.0",
+    "rewire": "^2.5.2",
     "uglify-js": "^2.4.24"
   }
 }

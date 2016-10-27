@@ -30,6 +30,19 @@
         }
     };
 
+    function convertNumber(str) {
+        if (str === '-Inf') {
+            return -Infinity;
+        } else if (str === '+Inf' || str === 'Inf') {
+            return Infinity;
+        }
+        return parseInt(str, 10);
+    }
+
+    // Derived from: https://github.com/symfony/translation/blob/460390765eb7bb9338a4a323b8a4e815a47541ba/Interval.php
+    var intervalRegexp = /^({\s*(\-?\d+(\.\d+)?[\s*,\s*\-?\d+(\.\d+)?]*)\s*})|([\[\]])\s*(-Inf|\-?\d+(\.\d+)?)\s*,\s*(\+?Inf|\-?\d+(\.\d+)?)\s*([\[\]])$/;
+    var anyIntervalRegexp = /({\s*(\-?\d+(\.\d+)?[\s*,\s*\-?\d+(\.\d+)?]*)\s*})|([\[\]])\s*(-Inf|\-?\d+(\.\d+)?)\s*,\s*(\+?Inf|\-?\d+(\.\d+)?)\s*([\[\]])/;
+
     // Default options //
 
     var defaults = {
@@ -184,12 +197,11 @@
 
         // Get the explicit rules, If any
         var explicitRules = [];
-        var regex = /{\d+}\s(.+)|\[\d+,\d+\]\s(.+)|\[\d+,Inf\]\s(.+)/;
 
         for (var i = 0; i < messageParts.length; i++) {
             messageParts[i] = messageParts[i].trim();
 
-            if (regex.test(messageParts[i])) {
+            if (anyIntervalRegexp.test(messageParts[i])) {
                 var messageSpaceSplit = messageParts[i].split(/\s/);
                 explicitRules.push(messageSpaceSplit.shift());
                 messageParts[i] = messageSpaceSplit.join(' ');
@@ -297,21 +309,62 @@
     /**
      * Checks if the given `count` is within the interval defined by the {string} `interval`
      *
-     * @param  count {int}  The amount of items.
-     * @param  interval {string}    The interval to be compared with the count.
-     * @return {boolean}    Returns true if count is within interval; false otherwise.
+     * @param  count     {int}    The amount of items.
+     * @param  interval  {string} The interval to be compared with the count.
+     * @return {boolean}          Returns true if count is within interval; false otherwise.
      */
     Lang.prototype._testInterval = function(count, interval) {
         /**
          * From the Symfony\Component\Translation\Interval Docs
          *
          * Tests if a given number belongs to a given math interval.
-         * An interval can represent a finite set of numbers: {1,2,3,4}
-         * An interval can represent numbers between two numbers: [1, +Inf] ]-1,2[
+         *
+         * An interval can represent a finite set of numbers:
+         *
+         *  {1,2,3,4}
+         *
+         * An interval can represent numbers between two numbers:
+         *
+         *  [1, +Inf]
+         *  ]-1,2[
+         *
          * The left delimiter can be [ (inclusive) or ] (exclusive).
          * The right delimiter can be [ (exclusive) or ] (inclusive).
          * Beside numbers, you can use -Inf and +Inf for the infinite.
          */
+
+        if (typeof interval !== 'string') {
+            throw 'Invalid interval: should be a string.';
+        }
+
+        interval = interval.trim();
+
+        var matches = interval.match(intervalRegexp);
+        if (!matches) {
+            throw new 'Invalid interval: ' + interval;
+        }
+
+        if (matches[2]) {
+            var items = matches[2].split(',');
+            for (var i = 0; i < items.length; i++) {
+                if (parseInt(items[i], 10) === count) {
+                    return true;
+                }
+            }
+        } else {
+            // Remove falsy values.
+            matches = matches.filter(function(match) {
+                return !!match;
+            });
+
+            var leftDelimiter = matches[1];
+            var leftNumber = convertNumber(matches[2]);
+            var rightNumber = convertNumber(matches[3]);
+            var rightDelimiter = matches[4];
+
+            return (leftDelimiter === '[' ? count >= leftNumber : count > leftNumber)
+                && (rightDelimiter === ']' ? count <= rightNumber : count < rightNumber);
+        }
 
         return false;
     };

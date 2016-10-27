@@ -31,16 +31,45 @@ describe('The lang.choice() method', function () {
         expect(lang.choice('messages.plural', 10)).toBe('a million apples');
     });
 
-    it('should return the expected message', function () {
-        lang.setLocale('en');
+    it('should return the expected message with different count', function () {
+        lang.setMessages({
+            'en.plural': {
+                'year': ':count year|:count years'
+            }
+        });
         expect(lang.choice('plural.year', 1)).toBe('1 year');
         expect(lang.choice('plural.year', 2)).toBe('2 years');
         expect(lang.choice('plural.year', 5)).toBe('5 years');
 
+        lang.setMessages({
+            'ru.plural': {
+                'year': ':count год|:count года|:count лет'
+            }
+        });
         lang.setLocale('ru');
         expect(lang.choice('plural.year', 1)).toBe('1 год');
         expect(lang.choice('plural.year', 2)).toBe('2 года');
         expect(lang.choice('plural.year', 5)).toBe('5 лет');
+    });
+
+    it('should return the expected message using math intervals', function() {
+        lang.setMessages({
+            'en.test': {
+                'set': '{0} a|{1} :count b|[2,Inf] :count c',
+                'range': '[0,10] a| [11,20] b|[21,30] c',
+                'infinity': '[-Inf,-1] :count Negative|[0,+Inf] :count Positive',
+            }
+        });
+        expect(lang.choice('test.set', 0)).toBe('a');
+        expect(lang.choice('test.set', 1)).toBe('1 b');
+        expect(lang.choice('test.set', 2)).toBe('2 c');
+        expect(lang.choice('test.range', 0)).toBe('a');
+        expect(lang.choice('test.range', 15)).toBe('b');
+        expect(lang.choice('test.range', 30)).toBe('c');
+        expect(lang.choice('test.infinity', -Infinity)).toBe('-Infinity Negative');
+        expect(lang.choice('test.infinity', -5)).toBe('-5 Negative');
+        expect(lang.choice('test.infinity', 5)).toBe('5 Positive');
+        expect(lang.choice('test.infinity', Infinity)).toBe('Infinity Positive');
     });
 
     it('should return the expected message with replacements', function () {

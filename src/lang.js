@@ -1,7 +1,7 @@
 /*!
  *  Lang.js for Laravel localization in JavaScript.
  *
- *  @version 1.1.4
+ *  @version 1.1.5
  *  @license MIT https://github.com/rmariuzzo/Lang.js/blob/master/LICENSE
  *  @site    https://github.com/rmariuzzo/Lang.js
  *  @author  Rubens Mariuzzo <rubens@mariuzzo.com>
@@ -252,10 +252,11 @@
         }
 
         var segments = key.split('.');
+        var source = segments[0].replace(/\//g, '.');
 
         return {
-            source: locale + '.' + segments[0].replace(/\//g, '.'),
-            sourceFallback: this.getFallback() + '.' + segments[0].replace(/\//g, '.'),
+            source: locale + '.' + source,
+            sourceFallback: this.getFallback() + '.' + source,
             entries: segments.slice(1)
         };
     };
@@ -277,12 +278,19 @@
             return null;
         }
 
-        // Get message text.
-
-        var message = this.messages[key.source] || this.messages[key.sourceFallback];
-
-        while (key.entries.length && (message = message[key.entries.shift()]))
+        // Get message from default locale.
+        var message = this.messages[key.source];
+        var entries = key.entries.slice();
+        while (entries.length && (message = message[entries.shift()]))
         ;
+
+        // Get message from fallback locale.
+        if (typeof message !== 'string' && this.messages[key.sourceFallback]) {
+            message = this.messages[key.sourceFallback];
+            entries = key.entries.slice();
+            while (entries.length && (message = message[entries.shift()]))
+            ;
+        }
 
         if (typeof message !== 'string') {
             return null;

@@ -58,6 +58,7 @@ describe('The lang.choice() method', function () {
                 'set': '{0} a|{1} :count b|[2,Inf] :count c',
                 'range': '[0,10] a| [11,20] b|[21,30] c',
                 'infinity': '[-Inf,-1] :count Negative|[0,+Inf] :count Positive',
+                'infinityStar': '[*,-1] :count Negative|[0,*] :count Positive',
             }
         });
         expect(lang.choice('test.set', 0)).toBe('a');
@@ -70,6 +71,10 @@ describe('The lang.choice() method', function () {
         expect(lang.choice('test.infinity', -5)).toBe('-5 Negative');
         expect(lang.choice('test.infinity', 5)).toBe('5 Positive');
         expect(lang.choice('test.infinity', Infinity)).toBe('Infinity Positive');
+        expect(lang.choice('test.infinityStar', -Infinity)).toBe('-Infinity Negative');
+        expect(lang.choice('test.infinityStar', -5)).toBe('-5 Negative');
+        expect(lang.choice('test.infinityStar', 5)).toBe('5 Positive');
+        expect(lang.choice('test.infinityStar', Infinity)).toBe('Infinity Positive');
     });
 
     it('should return the expected message with replacements', function () {

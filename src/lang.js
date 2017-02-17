@@ -65,10 +65,11 @@
      *
      * @param messages {object} The messages source.
      *
-     * @return void
+     * @return {Object} reference to self
      */
     Lang.prototype.setMessages = function(messages) {
         this.messages = messages;
+        return this;
     };
 
     /**
@@ -85,10 +86,11 @@
      *
      * @param locale {string} The locale to set.
      *
-     * @return void
+     * @return {Object} reference to self
      */
     Lang.prototype.setLocale = function(locale) {
         this.locale = locale;
+        return this;
     };
 
     /**
@@ -105,10 +107,11 @@
      *
      * @param fallback {string} The fallback locale.
      *
-     * @return void
+     * @return {Object} reference to self
      */
     Lang.prototype.setFallback = function(fallback) {
         this.fallback = fallback;
+        return this;
     };
 
     /**

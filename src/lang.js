@@ -56,6 +56,7 @@
         this.locale = options.locale || inferLocale() || defaults.locale;
         this.fallback = options.fallback;
         this.messages = options.messages;
+        this.messageFallback = options.messageFallback;
     };
 
     // Methods //
@@ -112,6 +113,26 @@
     };
 
     /**
+     * Get the message fallback closure.
+     *
+     * @return closure|null
+     */
+    Lang.prototype.getMessageFallback = function() {
+        return this.messageFallback;
+    };
+
+    /**
+     * Set the message fallback closure.
+     *
+     * @param messageFallback {string} The messageFallback closure.
+     *
+     * @return void
+     */
+    Lang.prototype.setMessageFallback = function(messageFallback) {
+        this.messageFallback = messageFallback;
+    };
+
+    /**
      * This method act as an alias to get() method.
      *
      * @param key {string} The key of the message.
@@ -138,12 +159,12 @@
      */
     Lang.prototype.get = function(key, replacements, locale) {
         if (!this.has(key)) {
-            return key;
+            return this.printKey(key);
         }
 
         var message = this._getMessage(key, locale);
         if (message === null) {
-            return key;
+            return this.printKey(key);
         }
 
         if (replacements) {
@@ -152,6 +173,21 @@
 
         return message;
     };
+
+    /**
+     * Call message fallback and return key
+     * 
+     * @param key {string} The key of the message.
+     *
+     * @return {string} The given key.
+     */
+    Lang.prototype.printKey = function(key){
+    	if(this.messageFallback !== undefined) {
+    		this.messageFallback(key);
+    	}
+
+    	return key;
+    }
 
     /**
      * This method act as an alias to get() method.

@@ -26,6 +26,13 @@ describe('The lang.get() method', function () {
         expect(lang.get(null)).toBe(null);
     });
 
+    it('should call massage fallback closure and return the passed key when not found', function () {
+        var test = '';
+        lang.setMessageFallback(function(key){ test = key });
+        expect(lang.get('foo.bar')).toBe('foo.bar');
+        expect(test).toBe('foo.bar');
+    });
+
     it('should return the expected message', function () {
         expect(lang.get('messages.home')).toBe('Home');
     });

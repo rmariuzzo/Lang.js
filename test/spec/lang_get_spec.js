@@ -51,4 +51,13 @@ describe('The lang.get() method', function () {
         expect(lang.get('messages.home')).toBe('Home');
         expect(lang.get('messages.home', {}, 'es')).toBe('Inicio');
     });
+
+    it('should capitalize the replacement key', function () {
+        expect(lang.get('validation.accepted_first_cap', {
+            'attribute': 'foo'
+        })).toBe('The Foo must be accepted.');
+        expect(lang.get('validation.accepted_all_caps', {
+            'attribute': 'foo'
+        })).toBe('The FOO must be accepted.');
+    });
 });

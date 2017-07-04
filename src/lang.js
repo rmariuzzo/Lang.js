@@ -309,7 +309,25 @@
      */
     Lang.prototype._applyReplacements = function(message, replacements) {
         for (var replace in replacements) {
-            message = message.split(':' + replace).join(replacements[replace]);
+            message = message.replace(new RegExp(':' + replace, 'gi'), function(match) {
+                var value = replacements[replace];
+                
+                // Capitalize all characters.
+                var allCaps = match === match.toUpperCase();
+                if (allCaps) {
+                    return value.toUpperCase();
+                }
+                
+                // Capitalize first letter.
+                var firstCap = match === match.replace(/\w/i, function(letter) {
+                    return letter.toUpperCase();
+                });
+                if (firstCap) {
+                    return value.charAt(0).toUpperCase() + value.slice(1);
+                }
+                
+                return value;
+            })
         }
         return message;
     };

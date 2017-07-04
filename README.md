@@ -1,4 +1,7 @@
-# Lang.js
+<div align="center">
+<h1 align="center">Lang.js</h1>
+<h6 align="center">Localization library written in JavaScript highly inspired on Laravel's Lang.</h6>
+</div>
 
 [![Build Status](https://travis-ci.org/rmariuzzo/Lang.js.svg)](https://travis-ci.org/rmariuzzo/Lang.js)
 ![Laravel 5.0](https://img.shields.io/badge/Laravel-5.0-f4645f.svg)
@@ -9,10 +12,6 @@
 ![NPM package](https://img.shields.io/badge/NPM-%E2%9C%93-cb3837.svg)
 ![Bower package](https://img.shields.io/badge/bower-%E2%9C%93-FFCC2F.svg)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/rmariuzzo/Lang.js/master/LICENSE)
-
-Localization library written in JavaScript highly inspired on Laravel's Lang.
-
- > 💁 **Heads up!** This repository host the JavaScript library used for [Laravel JS Localization](https://github.com/rmariuzzo/Laravel-JS-Localization). If you are already using Laravel JS Localization you don't need to use this too as it come automatically bundled.
 
 ## Installation
 

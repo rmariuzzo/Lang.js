@@ -137,7 +137,7 @@
      * @return {string} The translation message, if not found the given key.
      */
     Lang.prototype.get = function(key, replacements, locale) {
-        if (!this.has(key)) {
+        if (!this.has(key, locale)) {
             return key;
         }
 

@@ -367,7 +367,7 @@
 
         var matches = interval.match(intervalRegexp);
         if (!matches) {
-            throw new 'Invalid interval: ' + interval;
+            throw 'Invalid interval: ' + interval;
         }
 
         if (matches[2]) {

@@ -77,7 +77,7 @@
      * @return {string} The current locale.
      */
     Lang.prototype.getLocale = function() {
-        return this.locale || options.fallback;
+        return this.locale || this.fallback;
     };
 
     /**

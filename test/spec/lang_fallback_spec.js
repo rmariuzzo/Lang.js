@@ -42,4 +42,20 @@ describe('The lang\'s fallback locale feature', function() {
         expect(lang.get('greetings.hello')).toBe(messages['en.greetings'].hello);
     });
 
+    it('should not throw an error when the message is not defined and a fallback is set', function() {
+        var messages = {
+            'en.greetings': {
+                'hi': 'Hi',
+                'hello': 'Hello'
+            }
+        };
+        lang = new Lang({
+            messages: messages
+        });
+        lang.setLocale('it');
+        lang.setFallback('en');
+        expect(function() {
+            lang.get('greetings.hello');
+        }).not.toThrow();
+    });
 });

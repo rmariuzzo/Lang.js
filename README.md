@@ -1,24 +1,17 @@
-<div align="center">
-<h1 align="center">Lang.js</h1>
-<h6 align="center">Localization library written in JavaScript highly inspired on Laravel's Lang.</h6>
-</div>
+![Lang.js – Localization library written in JavaScript highly inspired on Laravel's Lang.](banner.png)
 
 [![Build Status](https://travis-ci.org/rmariuzzo/Lang.js.svg)](https://travis-ci.org/rmariuzzo/Lang.js)
+![Laravel 5.5](https://img.shields.io/badge/Laravel-5.5-f4645f.svg)
 ![Laravel 5.0](https://img.shields.io/badge/Laravel-5.0-f4645f.svg)
-![Laravel 5.1](https://img.shields.io/badge/Laravel-5.1-f4645f.svg)
-![Laravel 5.2](https://img.shields.io/badge/Laravel-5.2-f4645f.svg)
-![Laravel 5.3](https://img.shields.io/badge/Laravel-5.3-f4645f.svg)
 ![NPM Montly Downloads](https://img.shields.io/npm/dm/lang.js.svg)
-![NPM package](https://img.shields.io/badge/NPM-%E2%9C%93-cb3837.svg)
-![Bower package](https://img.shields.io/badge/bower-%E2%9C%93-FFCC2F.svg)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/rmariuzzo/Lang.js/master/LICENSE)
 
 ## Installation
 
 Different installation methods:
 
- - Bower: `bower install lang.js`
  - NPM: `npm install lang.js`
+ - Bower: `bower install lang.js`
  - Manually: [Download latest release](https://github.com/rmariuzzo/Lang.js/releases/latest)
 
 ## Documentation

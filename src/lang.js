@@ -281,7 +281,7 @@
         // Get message from default locale.
         var message = this.messages[key.source];
         var entries = key.entries.slice();
-        while (entries.length && (message = message[entries.shift()]))
+        while (entries.length && message !== undefined && (message = message[entries.shift()]))
         ;
 
         // Get message from fallback locale.

@@ -181,6 +181,16 @@ lang.get('greetings.hello');
 // > "greetings.hello"
 ```
 
+Get a translation file from a directory
+
+```js
+Lang.get('forum/thread.hello');
+// > "forum/thread.hello"
+
+Lang.get('forum/thread.hello', '{}', 'es');
+// > "Hola"
+```
+
 #### `trans`
 
 This method act as an alias of [`get()`](#get).

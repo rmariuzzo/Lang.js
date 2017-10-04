@@ -60,4 +60,8 @@ describe('The lang.get() method', function () {
             'attribute': 'foo'
         })).toBe('The FOO must be accepted.');
     });
+
+    it('should return the expected message from a nested directory', function() {
+        expect(lang.get('forum/thread.viewAllThreads')).toBe('View all threads');
+    });
 });

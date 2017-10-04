@@ -181,7 +181,7 @@ lang.get('greetings.hello');
 // > "greetings.hello"
 ```
 
-Get a translation file from a directory
+Get a translation file from a nested directory
 
 ```js
 Lang.get('forum/thread.hello');

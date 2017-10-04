@@ -220,6 +220,32 @@ lang.choice('fruits.apple', 4);
 lang.choice('fruits.apple', 4, {}, 'es');
 // > "manzanas"
 ```
+You may even create more complex pluralization rules which specify translation strings for multiple number ranges:
+
+```js
+var lang = new Lang({
+    messages: {
+        'en.fruits': {
+            'apple': '{0} There are none|[1,19] There are some|[20,*] There are many'
+        }
+    }
+});
+
+lang.choice('fruits.apple', 0);   
+// > "There are none"
+
+lang.choice('fruits.apple', 1);   
+// > "There are some"
+
+lang.choice('fruits.apple', 3);   
+// > "There are some"
+
+lang.choice('fruits.apple', 20);   
+// > "There are many"
+
+lang.choice('fruits.apple', 22);   
+// > "There are many
+```
 
 #### `transChoice`
 

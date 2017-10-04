@@ -185,9 +185,9 @@ Get a translation file from a nested directory
 
 ```js
 Lang.get('forum/thread.hello');
-// > "forum/thread.hello"
+// > "Hello"
 
-Lang.get('forum/thread.hello', '{}', 'es');
+Lang.get('forum/thread.hello', {}, 'es');
 // > "Hola"
 ```
 

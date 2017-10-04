@@ -224,12 +224,12 @@ You may even create more complex pluralization rules which specify translation s
 
 ```js
 var lang = new Lang({
-        messages: {
-            'en.fruits': {
-                'apple': '{0} There are none|[1,19] There are some|[20,*] There are many'
-            }
+    messages: {
+        'en.fruits': {
+            'apple': '{0} There are none|[1,19] There are some|[20,*] There are many'
         }
-    });
+    }
+});
 
 lang.choice('fruits.apple', 0);   
 // > "There are none"

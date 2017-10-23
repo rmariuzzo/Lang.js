@@ -281,6 +281,12 @@
         // Get message from default locale.
         var message = this.messages[key.source];
         var entries = key.entries.slice();
+
+        // Check if the message exists on the first level.
+        if (entries.length && message !== undefined && message[entries.join('.')] !== undefined) {
+            return message[key.entries.join('.')];
+        }
+
         while (entries.length && message !== undefined && (message = message[entries.shift()]))
         ;
 

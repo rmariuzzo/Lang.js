@@ -107,7 +107,8 @@
                 "son": "Jimmy"
             }
         },
-        "plural": "one apple|a million apples"
+        "plural": "one apple|a million apples",
+        "dot.in.key": "Dot In Key"
     },
     "en.pagination": {
         "previous": "&laquo; Previous",

@@ -64,4 +64,8 @@ describe('The lang.get() method', function () {
     it('should return the expected message from a nested directory', function() {
         expect(lang.get('forum/thread.viewAllThreads')).toBe('View all threads');
     });
+
+    it('should return the expected message if the key has a dot', function() {
+        expect(lang.get('messages.dot.in.key')).toBe('Dot In Key');
+    })
 });

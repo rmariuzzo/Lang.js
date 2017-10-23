@@ -279,21 +279,29 @@
         }
 
         // Get message from default locale.
-        var message = this.messages[key.source];
-        var entries = key.entries.slice();
-        while (entries.length && message !== undefined && (message = message[entries.shift()]))
-        ;
+        var message = this._findMessageInTree(key.entries.slice(), this.messages[key.source]);
 
         // Get message from fallback locale.
         if (typeof message !== 'string' && this.messages[key.sourceFallback]) {
-            message = this.messages[key.sourceFallback];
-            entries = key.entries.slice();
-            while (entries.length && (message = message[entries.shift()]))
-            ;
+            message = this._findMessageInTree(key.entries.slice(), this.messages[key.sourceFallback]);
         }
 
         if (typeof message !== 'string') {
             return null;
+        }
+
+        return message;
+    };
+
+    Lang.prototype._findMessageInTree = function(entries, message) {
+        while (entries.length && message !== undefined) {
+            var dottedKey = entries.join('.');
+            if (message[dottedKey]) {
+                message = message[dottedKey];
+                break;
+            }
+
+            message = message[entries.shift()]
         }
 
         return message;

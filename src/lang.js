@@ -293,18 +293,24 @@
         return message;
     };
 
-    Lang.prototype._findMessageInTree = function(entries, message) {
-        while (entries.length && message !== undefined) {
-            var dottedKey = entries.join('.');
-            if (message[dottedKey]) {
-                message = message[dottedKey];
+    /**
+     * Find a message in a translation tree using both dotted keys and regular ones
+     *
+     * @param pathSegments {array} An array of path segments such as ['family', 'father']
+     * @param tree {object} The translation tree
+     */
+    Lang.prototype._findMessageInTree = function(pathSegments, tree) {
+        while (pathSegments.length && tree !== undefined) {
+            var dottedKey = pathSegments.join('.');
+            if (tree[dottedKey]) {
+                tree = tree[dottedKey];
                 break;
             }
 
-            message = message[entries.shift()]
+            tree = tree[pathSegments.shift()]
         }
 
-        return message;
+        return tree;
     };
 
     /**
@@ -319,13 +325,13 @@
         for (var replace in replacements) {
             message = message.replace(new RegExp(':' + replace, 'gi'), function(match) {
                 var value = replacements[replace];
-                
+
                 // Capitalize all characters.
                 var allCaps = match === match.toUpperCase();
                 if (allCaps) {
                     return value.toUpperCase();
                 }
-                
+
                 // Capitalize first letter.
                 var firstCap = match === match.replace(/\w/i, function(letter) {
                     return letter.toUpperCase();
@@ -333,7 +339,7 @@
                 if (firstCap) {
                     return value.charAt(0).toUpperCase() + value.slice(1);
                 }
-                
+
                 return value;
             })
         }

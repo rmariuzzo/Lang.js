@@ -109,7 +109,7 @@
         },
         "plural": "one apple|a million apples",
         "dot.in.key": "Dot In Key",
-        "category": {
+        "another.don.in": {
             "dot.in.key": "Dot In Key 2"
         }
     },

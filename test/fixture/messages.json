@@ -108,7 +108,10 @@
             }
         },
         "plural": "one apple|a million apples",
-        "dot.in.key": "Dot In Key"
+        "dot.in.key": "Dot In Key",
+        "category": {
+            "dot.in.key": "Dot In Key"
+        }
     },
     "en.pagination": {
         "previous": "&laquo; Previous",

@@ -281,15 +281,27 @@
         // Get message from default locale.
         var message = this.messages[key.source];
         var entries = key.entries.slice();
-        while (entries.length && message !== undefined && (message = message[entries.shift()]))
-        ;
+        var subKey = '';
+        while (entries.length && message !== undefined) {
+            var subKey = !subKey ? entries.shift() : subKey.concat('.', entries.shift());
+            if (message[subKey]) {
+                message = message[subKey]
+                subKey = '';
+            }
+        }
 
         // Get message from fallback locale.
         if (typeof message !== 'string' && this.messages[key.sourceFallback]) {
             message = this.messages[key.sourceFallback];
             entries = key.entries.slice();
-            while (entries.length && (message = message[entries.shift()]))
-            ;
+            subKey = '';
+            while (entries.length && message !== undefined) {
+                var subKey = !subKey ? entries.shift() : subKey.concat('.', entries.shift());
+                if (message[subKey]) {
+                    message = message[subKey]
+                    subKey = '';
+                }
+            }
         }
 
         if (typeof message !== 'string') {
@@ -311,13 +323,13 @@
         for (var replace in replacements) {
             message = message.replace(new RegExp(':' + replace, 'gi'), function(match) {
                 var value = replacements[replace];
-                
+
                 // Capitalize all characters.
                 var allCaps = match === match.toUpperCase();
                 if (allCaps) {
                     return value.toUpperCase();
                 }
-                
+
                 // Capitalize first letter.
                 var firstCap = match === match.replace(/\w/i, function(letter) {
                     return letter.toUpperCase();
@@ -325,7 +337,7 @@
                 if (firstCap) {
                     return value.charAt(0).toUpperCase() + value.slice(1);
                 }
-                
+
                 return value;
             })
         }

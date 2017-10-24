@@ -296,18 +296,19 @@
     /**
      * Find a message in a translation tree using both dotted keys and regular ones
      *
-     * @param pathSegments {array} An array of path segments such as ['family', 'father']
+     * @param segments {array} An array of path segments such as ['family', 'father']
      * @param tree {object} The translation tree
      */
-    Lang.prototype._findMessageInTree = function(pathSegments, tree) {
-        while (pathSegments.length && tree !== undefined) {
-            var dottedKey = pathSegments.join('.');
-            if (tree[dottedKey]) {
-                tree = tree[dottedKey];
-                break;
-            }
+    Lang.prototype._findMessageInTree = function(segments, tree) {
+        var key = '';
 
-            tree = tree[pathSegments.shift()]
+        while (segments.length && tree !== undefined) {
+            var shifted = segments.shift();
+            key = key ? key.concat('.', shifted) : shifted;
+            if (tree[key]) {
+                tree = tree[key];
+                key = '';
+            }
         }
 
         return tree;

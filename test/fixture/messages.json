@@ -111,6 +111,10 @@
         "dot.in.key": "Dot In Key",
         "category": {
             "dot.in.key": "Dot In Key"
+        },
+        "dot.in.category": {
+            "key": "Dot in Category but no Dot in Key",
+            "dot.in.key": "Dot in Category and Dot in Key"
         }
     },
     "en.pagination": {

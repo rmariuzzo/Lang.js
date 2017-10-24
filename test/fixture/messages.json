@@ -109,8 +109,11 @@
         },
         "plural": "one apple|a million apples",
         "dot.in.key": "Dot In Key",
-        "category": {
-            "dot.in.key": "Dot In Key"
+        "dot.in.key.nested": {
+            "dot.in.key.nested": "Dot In Key Nested Tricky"
+        },
+        "dotInKey": {
+            "dot.in.key": "Dot In Key Nested Simple"
         }
     },
     "en.pagination": {

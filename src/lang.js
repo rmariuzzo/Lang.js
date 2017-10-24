@@ -279,17 +279,11 @@
         }
 
         // Get message from default locale.
-        var message = this.messages[key.source];
-        var entries = key.entries.slice();
-        while (entries.length && message !== undefined && (message = message[entries.shift()]))
-        ;
+        var message = this._findMessageInTree(key.entries.slice(), this.messages[key.source]);
 
         // Get message from fallback locale.
         if (typeof message !== 'string' && this.messages[key.sourceFallback]) {
-            message = this.messages[key.sourceFallback];
-            entries = key.entries.slice();
-            while (entries.length && (message = message[entries.shift()]))
-            ;
+            message = this._findMessageInTree(key.entries.slice(), this.messages[key.sourceFallback]);
         }
 
         if (typeof message !== 'string') {
@@ -297,6 +291,26 @@
         }
 
         return message;
+    };
+
+    /**
+     * Find a message in a translation tree using both dotted keys and regular ones
+     *
+     * @param pathSegments {array} An array of path segments such as ['family', 'father']
+     * @param tree {object} The translation tree
+     */
+    Lang.prototype._findMessageInTree = function(pathSegments, tree) {
+        while (pathSegments.length && tree !== undefined) {
+            var dottedKey = pathSegments.join('.');
+            if (tree[dottedKey]) {
+                tree = tree[dottedKey];
+                break;
+            }
+
+            tree = tree[pathSegments.shift()]
+        }
+
+        return tree;
     };
 
     /**
@@ -311,13 +325,13 @@
         for (var replace in replacements) {
             message = message.replace(new RegExp(':' + replace, 'gi'), function(match) {
                 var value = replacements[replace];
-                
+
                 // Capitalize all characters.
                 var allCaps = match === match.toUpperCase();
                 if (allCaps) {
                     return value.toUpperCase();
                 }
-                
+
                 // Capitalize first letter.
                 var firstCap = match === match.replace(/\w/i, function(letter) {
                     return letter.toUpperCase();
@@ -325,7 +339,7 @@
                 if (firstCap) {
                     return value.charAt(0).toUpperCase() + value.slice(1);
                 }
-                
+
                 return value;
             })
         }

@@ -71,6 +71,6 @@ describe('The lang.get() method', function () {
 
     it('should return the expected message if the key is nested and has a dot', function() {
         expect(lang.get('messages.dotInKey.dot.in.key')).toBe('Dot In Key Nested Simple');
-        expect(lang.get('messages.dot.in.key.nested.dot.in.key.nested')).toBe('Dot In Key Nested Tricky');
+        expect(lang.get('messages.dot.in.key2.nested.dot.in.key2.nested')).toBe('Dot In Key Nested Tricky');
     });
 });

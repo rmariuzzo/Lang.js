@@ -279,11 +279,29 @@
         }
 
         // Get message from default locale.
-        var message = this._findMessageInTree(key.entries.slice(), this.messages[key.source]);
+        var message = this.messages[key.source];
+        var entries = key.entries.slice();
+        var subKey = '';
+        while (entries.length && message !== undefined) {
+            var subKey = !subKey ? entries.shift() : subKey.concat('.', entries.shift());
+            if (message[subKey]) {
+                message = message[subKey]
+                subKey = '';
+            }
+        }
 
         // Get message from fallback locale.
         if (typeof message !== 'string' && this.messages[key.sourceFallback]) {
-            message = this._findMessageInTree(key.entries.slice(), this.messages[key.sourceFallback]);
+            message = this.messages[key.sourceFallback];
+            entries = key.entries.slice();
+            subKey = '';
+            while (entries.length && message !== undefined) {
+                var subKey = !subKey ? entries.shift() : subKey.concat('.', entries.shift());
+                if (message[subKey]) {
+                    message = message[subKey]
+                    subKey = '';
+                }
+            }
         }
 
         if (typeof message !== 'string') {

@@ -114,7 +114,8 @@
         },
         "dotInKey": {
             "dot.in.key": "Dot In Key Nested Simple"
-        }
+        },
+        "empty": ""
     },
     "en.pagination": {
         "previous": "&laquo; Previous",

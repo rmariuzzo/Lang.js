@@ -284,7 +284,7 @@
         var subKey = '';
         while (entries.length && message !== undefined) {
             var subKey = !subKey ? entries.shift() : subKey.concat('.', entries.shift());
-            if (message[subKey]) {
+            if (message[subKey] !== undefined) {
                 message = message[subKey]
                 subKey = '';
             }

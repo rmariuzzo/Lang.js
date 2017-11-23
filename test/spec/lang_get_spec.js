@@ -73,4 +73,8 @@ describe('The lang.get() method', function () {
         expect(lang.get('messages.dotInKey.dot.in.key')).toBe('Dot In Key Nested Simple');
         expect(lang.get('messages.dot.in.key2.nested.dot.in.key2.nested')).toBe('Dot In Key Nested Tricky');
     });
+
+    it('should return an empty string', function() {
+        expect(lang.get('messages.empty')).toBe('');
+    })
 });

@@ -211,5 +211,8 @@
     },
     "ru.plural": {
         "year": ":count год|:count года|:count лет"
+    },
+    "en.unique": {
+        "samePrefixKeys": "Your order contains :items items with :itemsPapayas papayas and :itemsMangoes mangoes"
     }
 }

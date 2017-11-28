@@ -76,5 +76,13 @@ describe('The lang.get() method', function () {
 
     it('should return an empty string', function() {
         expect(lang.get('messages.empty')).toBe('');
-    })
+    });
+
+    it('should return the expected message when keys has equal prefix', function() {
+        expect(lang.get('unique.samePrefixKeys', {
+            items: 5,
+            itemsPapayas: 3,
+            itemsMangoes: 2
+        })).toBe('Your order contains 5 items with 3 papayas and 2 mangoes');
+    });
 });

@@ -54,5 +54,4 @@ describe('The lang.trans() method', function () {
             'attribute': 'foo'
         })).toBe('The foo must be accepted.');
     });
-
 });

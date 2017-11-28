@@ -332,6 +332,18 @@
     };
 
     /**
+     * Sort replacement keys by length in descending order.
+     *
+     * @param a {string} Replacement key
+     * @param b {string} Sibling replacement key
+     * @return {number}
+     * @private
+     */
+    Lang.prototype._sortReplacementKeys = function(a, b) {
+        return b.length - a.length;
+    };
+
+    /**
      * Apply replacements to a string message containing placeholders.
      *
      * @param message {string} The text message.
@@ -340,8 +352,10 @@
      * @return {string} The string message with replacements applied.
      */
     Lang.prototype._applyReplacements = function(message, replacements) {
-        for (var replace in replacements) {
-            message = message.replace(new RegExp(':' + replace, 'gi'), function(match) {
+        var keys = Object.keys(replacements).sort(this._sortReplacementKeys);
+
+        keys.forEach(function(replace) {
+            message = message.replace(new RegExp(':' + replace, 'gi'), function (match) {
                 var value = replacements[replace];
 
                 // Capitalize all characters.
@@ -360,7 +374,7 @@
 
                 return value;
             })
-        }
+        });
         return message;
     };
 

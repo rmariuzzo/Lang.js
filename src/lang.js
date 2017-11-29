@@ -221,9 +221,13 @@
             }
         }
 
-        var pluralForm = this._getPluralForm(number);
+        var pluralForm = this._getPluralForm(number, locale);
+        //Check if pluralForm exists
+        if (messageParts.length > pluralForm) {
+            return messageParts[pluralForm];
+        }
 
-        return messageParts[pluralForm];
+        return messageParts[0];
     };
 
     /**
@@ -232,11 +236,12 @@
      * @param key {string} The key of the message.
      * @param count {number} The number of elements.
      * @param replacements {object} The replacements to be done in the message.
+     * @param locale {string} The locale to use, if not passed use the default locale.
      *
      * @return {string} The translation message according to an integer value.
      */
-    Lang.prototype.transChoice = function(key, count, replacements) {
-        return this.choice(key, count, replacements);
+    Lang.prototype.transChoice = function(key, count, replacements, locale) {
+        return this.choice(key, count, replacements, locale);
     };
 
     /**
@@ -454,8 +459,9 @@
      * @param {Number} count
      * @return {Number}
      */
-    Lang.prototype._getPluralForm = function(count) {
-        switch (this.locale) {
+    Lang.prototype._getPluralForm = function(count, locale) {
+        locale = locale || this.getLocale();
+        switch (locale) {
             case 'az':
             case 'bo':
             case 'dz':
@@ -645,7 +651,10 @@
                                     : 5))));
 
             default:
-                return 0;
+                //By default supports two plural forms
+                return (count == 1)
+                    ? 0
+                    : 1;
         }
     };
 

@@ -222,8 +222,12 @@
         }
 
         var pluralForm = this._getPluralForm(number);
+        //Check if pluralForm exists
+        if (messageParts.length > pluralForm) {
+            return messageParts[pluralForm];
+        }
 
-        return messageParts[pluralForm];
+        return messageParts[0];
     };
 
     /**
@@ -645,7 +649,10 @@
                                     : 5))));
 
             default:
-                return 0;
+                //By default supports two plural forms
+                return (count == 1)
+                    ? 0
+                    : 1;
         }
     };
 

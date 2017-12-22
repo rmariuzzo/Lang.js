@@ -221,7 +221,8 @@
             }
         }
 
-        var pluralForm = this._getPluralForm(number);
+        locale = locale || this._getLocale(key);
+        var pluralForm = this._getPluralForm(number, locale);
 
         return messageParts[pluralForm];
     };
@@ -309,6 +310,22 @@
         }
 
         return message;
+    };
+
+    /**
+     * Return the locale to be used between default and fallback.
+     * @param {String} key
+     * @return {String}
+     */
+    Lang.prototype._getLocale = function(key) {
+        key = this._parseKey(key, this.locale)
+        if (this.messages[key.source]) {
+            return this.locale;
+        }
+        if (this.messages[key.sourceFallback]) {
+            return this.fallback;
+        }
+        return null;
     };
 
     /**
@@ -452,10 +469,11 @@
      * Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
      *
      * @param {Number} count
+     * @param {String} locale
      * @return {Number}
      */
-    Lang.prototype._getPluralForm = function(count) {
-        switch (this.locale) {
+    Lang.prototype._getPluralForm = function(count, locale) {
+        switch (locale) {
             case 'az':
             case 'bo':
             case 'dz':

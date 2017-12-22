@@ -89,4 +89,17 @@ describe('The lang.choice() method', function () {
         expect(lang.choice('messages.home', 1, {}, 'es')).toBe('Inicio');
     });
 
+    it('should return the expected message using the fallback language', function() {
+        lang.setMessages({
+            'en.test': {
+                'box': ':count box|:count boxes'
+            }
+        });
+        lang.setFallback('en');
+        lang.setLocale('pl');
+        expect(lang.choice('test.box', 1)).toBe('1 box');
+        expect(lang.choice('test.box', 2)).toBe('2 boxes');
+        expect(lang.choice('test.box', 10)).toBe('10 boxes');
+    });
+
 });

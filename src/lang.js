@@ -285,8 +285,8 @@
         var subKey = '';
         while (entries.length && message !== undefined) {
             var subKey = !subKey ? entries.shift() : subKey.concat('.', entries.shift());
-            if (message[subKey] !== undefined) {
-                message = message[subKey]
+            if (message[subKey] !== undefined && entries.length === 0) {
+                message = message[subKey];
                 subKey = '';
             }
         }
@@ -298,8 +298,8 @@
             subKey = '';
             while (entries.length && message !== undefined) {
                 var subKey = !subKey ? entries.shift() : subKey.concat('.', entries.shift());
-                if (message[subKey]) {
-                    message = message[subKey]
+                if (message[subKey] && entries.length === 0) {
+                    message = message[subKey];
                     subKey = '';
                 }
             }

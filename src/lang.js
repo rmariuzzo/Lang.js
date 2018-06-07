@@ -282,12 +282,18 @@
         // Get message from default locale.
         var message = this.messages[key.source];
         var entries = key.entries.slice();
-        var subKey = '';
-        while (entries.length && message !== undefined) {
-            var subKey = !subKey ? entries.shift() : subKey.concat('.', entries.shift());
-            if (message[subKey] !== undefined) {
-                message = message[subKey]
-                subKey = '';
+        var subKey = entries.join('.');
+
+        // Priorize the full key translation
+        if (message[subKey] !== undefined) {
+            message = message[subKey]
+        } else {
+            while (entries.length && message !== undefined) {
+                var subKey = !subKey ? entries.shift() : subKey.concat('.', entries.shift());
+                if (message[subKey] !== undefined) {
+                    message = message[subKey]
+                    subKey = '';
+                }
             }
         }
 
@@ -295,12 +301,18 @@
         if (typeof message !== 'string' && this.messages[key.sourceFallback]) {
             message = this.messages[key.sourceFallback];
             entries = key.entries.slice();
-            subKey = '';
-            while (entries.length && message !== undefined) {
-                var subKey = !subKey ? entries.shift() : subKey.concat('.', entries.shift());
-                if (message[subKey]) {
-                    message = message[subKey]
-                    subKey = '';
+            subKey = entries.join('.');
+
+            // Priorize the full key translation
+            if (message[subKey] !== undefined) {
+                message = message[subKey]
+            } else {
+                while (entries.length && message !== undefined) {
+                    var subKey = !subKey ? entries.shift() : subKey.concat('.', entries.shift());
+                    if (message[subKey]) {
+                        message = message[subKey]
+                        subKey = '';
+                    }
                 }
             }
         }

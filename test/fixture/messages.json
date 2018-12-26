@@ -109,6 +109,8 @@
         },
         "plural": "one apple|a million apples",
         "dot.in.key": "Dot In Key",
+        "with_parent": "Key That Is Subpart Of A Parent Key",
+        "with_parent.dot.in.key": "Dot In Key With a Parent Key",
         "dot.in.key2.nested": {
             "dot.in.key2.nested": "Dot In Key Nested Tricky"
         },

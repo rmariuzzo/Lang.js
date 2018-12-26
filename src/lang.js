@@ -272,6 +272,7 @@
      */
     Lang.prototype._getMessage = function(key, locale) {
         locale = locale || this.getLocale();
+        
         key = this._parseKey(key, locale);
 
         // Ensure message source exists.
@@ -282,14 +283,9 @@
         // Get message from default locale.
         var message = this.messages[key.source];
         var entries = key.entries.slice();
-        var subKey = '';
-        while (entries.length && message !== undefined) {
-            var subKey = !subKey ? entries.shift() : subKey.concat('.', entries.shift());
-            if (message[subKey] !== undefined) {
-                message = message[subKey]
-                subKey = '';
-            }
-        }
+        var subKey = entries.join('.');
+        message = message !== undefined ? this._getValueInKey(message, subKey) : undefined;
+
 
         // Get message from fallback locale.
         if (typeof message !== 'string' && this.messages[key.sourceFallback]) {
@@ -310,6 +306,29 @@
         }
 
         return message;
+    };
+
+    Lang.prototype._getValueInKey = function(obj, str) {
+        // If the full key exists just return the value
+        if (typeof obj[str] === 'string') {
+            return obj[str]
+        }
+
+        str = str.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+        str = str.replace(/^\./, '');           // strip a leading dot
+
+        var parts = str.split('.');
+
+        for (var i = 0, n = parts.length; i < n; ++i) {
+            var currentKey = parts.slice(0, i + 1).join('.');
+            var restOfTheKey = parts.slice(i + 1, parts.length).join('.')
+            
+            if (obj[currentKey]) {
+                return this._getValueInKey(obj[currentKey], restOfTheKey)
+            }
+        }
+
+        return obj;
     };
 
     /**

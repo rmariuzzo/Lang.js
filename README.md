@@ -205,7 +205,7 @@ var lang = new Lang({
         'en.fruits': {
             'apple': 'apple|apples'
         },
-        'es.greetings': {
+        'es.fruits': {
             'apple': 'manzana|manzanas'
         }
     }

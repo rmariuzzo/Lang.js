@@ -5,7 +5,7 @@
   "main": "src/lang.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "jasmine-node test/spec/",
+    "test": "jest",
     "test:watch": "jasmine-node test/spec/ --color --autotest --watch src/",
     "minify": "uglifyjs src/lang.js --output dist/lang.min.js --comments --verbose",
     "jshint": "npm run jshint:src && npm run jshint:test",
@@ -23,9 +23,20 @@
     "url": "https://github.com/rmariuzzo/Lang.js/issues"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.0",
+    "@types/node": "^10.12.21",
     "jasmine-node": "~1.14.3",
+    "jest": "^24.1.0",
     "jshint": "^2.8.0",
     "rewire": "^2.5.2",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.3.1",
     "uglify-js": "^2.4.24"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
+  },
+  "engines": {
+    "node": ">=8"
   }
 }

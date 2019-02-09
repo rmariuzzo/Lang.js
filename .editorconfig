@@ -9,11 +9,11 @@ end_of_line = lf
 insert_final_newline = true
 
 # Tab indentation.
-[*.js]
+[{*.js, *.ts}]
 indent_style = space
-indent_size = 4
+indent_size = 2
 
 # Matches the exact files either package.json or bower.json
-[{bower.json,.travis.yml}]
+[{package.json,.travis.yml}]
 indent_style = space
 indent_size = 4

@@ -11,10 +11,10 @@
 
 # Installation
 
-- `npm install lang.js@next`
+```bash
+npm install lang.js@next
+```
 
-<br>
-<br>
 <br>
 
 # Documentation
@@ -29,11 +29,7 @@ var lang = new Lang({
 });
 ```
 
-<br>
-<br>
-<br>
-
-## Messages source format
+### Messages source format
 
 The messages source format looks like this:
 
@@ -54,6 +50,8 @@ The messages source format looks like this:
 ```
 
 See the sample used in tests located at: `test/fixture/messages.json`.
+
+<br>
 
 ## API
 
@@ -182,8 +180,6 @@ lang.choice("fruits.apple", 22);
 This method act as an alias of [`choice()`](#choice).
 
 <br>
-<br>
-<br>
 
 # Development
 
@@ -192,8 +188,6 @@ This method act as an alias of [`choice()`](#choice).
 3.  Submit a PR to be merge into `next` branch.
 
 <br>
-<br>
-<br>
 
 # Testing
 
@@ -201,8 +195,12 @@ To run the tests use the following commands:
 
 - Single run: `npm run test`
 
+<br>
+
 # Deployment
 
 We do deployment using `np`:
 
-- `np 2.0.0-beta.0 --tag=next --any-branch`
+```bash
+np 2.0.0-beta.n --tag=next --any-branch
+```

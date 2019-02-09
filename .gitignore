@@ -1,3 +1,6 @@
 node_modules
-.idea
 npm-debug.log
+cjs
+esm
+umd
+.size-snapshot.json

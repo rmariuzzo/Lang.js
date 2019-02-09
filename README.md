@@ -6,6 +6,10 @@
 ![NPM Montly Downloads](https://img.shields.io/npm/dm/lang.js.svg)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/rmariuzzo/Lang.js/master/LICENSE)
 
+<br>
+<br>
+<br>
+
 ## Installation
 
 Different installation methods:
@@ -13,6 +17,16 @@ Different installation methods:
  - NPM: `npm install lang.js`
  - Bower: `bower install lang.js`
  - Manually: [Download latest release](https://github.com/rmariuzzo/Lang.js/releases/latest)
+
+<br>
+<br>
+<br>
+
+[![Are you interested in the next version?](.github/next-version.svg)](https://github.com/rmariuzzo/Lang.js/tree/next)
+
+<br>
+<br>
+<br>
 
 ## Documentation
 
@@ -251,6 +265,9 @@ lang.choice('fruits.apple', 22);
 
 This method act as an alias of [`choice()`](#choice).
 
+<br>
+<br>
+<br>
 
 ## Development
 
@@ -259,6 +276,10 @@ This method act as an alias of [`choice()`](#choice).
  3. Submit a PR to be merge into develop branch.
 
 **[Get help!](https://gitter.im/rmariuzzo/Lang.js)**
+
+<br>
+<br>
+<br>
 
 ## Testing
 

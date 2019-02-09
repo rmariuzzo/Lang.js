@@ -6,14 +6,13 @@
     "license": "MIT",
     "author": "rmariuzzo",
     "files": [
-        "src",
+        "lib",
         "cjs",
         "esm",
         "umd"
     ],
-    "main": "built/index.js",
+    "main": "lib/index.js",
     "module": "esm/lang.js",
-    "types": "index.d.ts",
     "scripts": {
         "build": "rollup -c",
         "test": "jest",
@@ -57,7 +56,7 @@
     ],
     "husky": {
         "hooks": {
-            "pre-commit": "pretty-quick --staged"
+            "pre-commit": "pretty-quick --staged && npm run test"
         }
     }
 }

@@ -1,6 +1,5 @@
-![Lang.js – Localization library written in JavaScript highly inspired on Laravel's Lang.](banner.png)
+![Lang.js – Localization library written in JavaScript highly inspired on Laravel's Lang.](.github/banner.png)
 
-[![Build Status](https://travis-ci.org/rmariuzzo/Lang.js.svg)](https://travis-ci.org/rmariuzzo/Lang.js)
 ![Laravel 5.5](https://img.shields.io/badge/Laravel-5.5-f4645f.svg)
 ![Laravel 5.0](https://img.shields.io/badge/Laravel-5.0-f4645f.svg)
 ![NPM Montly Downloads](https://img.shields.io/npm/dm/lang.js.svg)
@@ -10,9 +9,9 @@
 
 Different installation methods:
 
- - NPM: `npm install lang.js`
- - Bower: `bower install lang.js`
- - Manually: [Download latest release](https://github.com/rmariuzzo/Lang.js/releases/latest)
+- NPM: `npm install lang.js`
+- Bower: `bower install lang.js`
+- Manually: [Download latest release](https://github.com/rmariuzzo/Lang.js/releases/latest)
 
 ## Documentation
 
@@ -20,9 +19,9 @@ Different installation methods:
 
 ```js
 var lang = new Lang({
-    messages: source,
-    locale: 'fr',
-    fallback: 'zn'
+  messages: source,
+  locale: "fr",
+  fallback: "zn"
 });
 ```
 
@@ -71,7 +70,7 @@ var lang = new Lang();
 lang.getLocale();
 // > "en"
 
-lang.setLocale('fr');
+lang.setLocale("fr");
 lang.getLocale();
 // > "fr"
 ```
@@ -83,7 +82,7 @@ Set the current locale.
 ```js
 var lang = new Lang();
 
-lang.setLocale('ht');
+lang.setLocale("ht");
 lang.getLocale();
 // > "ht"
 ```
@@ -98,7 +97,7 @@ var lang = new Lang();
 lang.getFallback();
 // > undefined
 
-lang.setFallback('de');
+lang.setFallback("de");
 lang.getFallback();
 // > "de"
 ```
@@ -109,23 +108,23 @@ Set the fallback locale. When retrieving a message (using [`get()`](#get) or [`h
 
 ```js
 var lang = new Lang({
-    messages: {
-        'en.greetings': {
-            'hi': 'Hi',
-            'hello': 'Hello'
-        },
-        'it.greetings': {
-            'hi': 'Salve'
-        }
+  messages: {
+    "en.greetings": {
+      hi: "Hi",
+      hello: "Hello"
+    },
+    "it.greetings": {
+      hi: "Salve"
     }
+  }
 });
 
-lang.setLocale('it');
-lang.get('greetings.hello');
+lang.setLocale("it");
+lang.get("greetings.hello");
 // > "greetings.hello"
 
-lang.setFallback('en');
-lang.get('greetings.hello');
+lang.setFallback("en");
+lang.get("greetings.hello");
 // > "Hello"
 ```
 
@@ -135,23 +134,23 @@ Indicate if a given key is defined on the messages source. Return `true` if the 
 
 ```js
 var lang = new Lang({
-    messages: {
-        'en.greetings': {
-            'hi': 'Hi'
-        },
-        'es.greetings': {
-            'hi': 'Hola'
-        }
+  messages: {
+    "en.greetings": {
+      hi: "Hi"
+    },
+    "es.greetings": {
+      hi: "Hola"
     }
+  }
 });
 
-lang.has('greetings.hi');
+lang.has("greetings.hi");
 // > true
 
-lang.has('greetings.hi', 'es');
+lang.has("greetings.hi", "es");
 // > true
 
-lang.has('greetings.hello');
+lang.has("greetings.hello");
 // > false
 ```
 
@@ -161,33 +160,33 @@ Get a translation message if found, otherwise return the given key. This method 
 
 ```js
 var lang = new Lang({
-    messages: {
-        'en.greetings': {
-            'hi': 'Hi'
-        },
-        'es.greetings': {
-            'hi': 'Hola'
-        }
+  messages: {
+    "en.greetings": {
+      hi: "Hi"
+    },
+    "es.greetings": {
+      hi: "Hola"
     }
+  }
 });
 
-lang.get('greetings.hi');
+lang.get("greetings.hi");
 // > "Hi"
 
-lang.get('greetings.hi', {}, 'es');
+lang.get("greetings.hi", {}, "es");
 // > "Hola"
 
-lang.get('greetings.hello');
+lang.get("greetings.hello");
 // > "greetings.hello"
 ```
 
 Get a translation file from a nested directory
 
 ```js
-Lang.get('forum/thread.hello');
+Lang.get("forum/thread.hello");
 // > "Hello"
 
-Lang.get('forum/thread.hello', {}, 'es');
+Lang.get("forum/thread.hello", {}, "es");
 // > "Hola"
 ```
 
@@ -201,49 +200,50 @@ Get the plural or singular form of the message specified based on an integer val
 
 ```js
 var lang = new Lang({
-    messages: {
-        'en.fruits': {
-            'apple': 'apple|apples'
-        },
-        'es.fruits': {
-            'apple': 'manzana|manzanas'
-        }
+  messages: {
+    "en.fruits": {
+      apple: "apple|apples"
+    },
+    "es.fruits": {
+      apple: "manzana|manzanas"
     }
+  }
 });
 
-lang.choice('fruits.apple', 1);
+lang.choice("fruits.apple", 1);
 // > "apple"
 
-lang.choice('fruits.apple', 4);
+lang.choice("fruits.apple", 4);
 // > "apples"
 
-lang.choice('fruits.apple', 4, {}, 'es');
+lang.choice("fruits.apple", 4, {}, "es");
 // > "manzanas"
 ```
+
 You may even create more complex pluralization rules which specify translation strings for multiple number ranges:
 
 ```js
 var lang = new Lang({
-    messages: {
-        'en.fruits': {
-            'apple': '{0} There are none|[1,19] There are some|[20,*] There are many'
-        }
+  messages: {
+    "en.fruits": {
+      apple: "{0} There are none|[1,19] There are some|[20,*] There are many"
     }
+  }
 });
 
-lang.choice('fruits.apple', 0);   
+lang.choice("fruits.apple", 0);
 // > "There are none"
 
-lang.choice('fruits.apple', 1);   
+lang.choice("fruits.apple", 1);
 // > "There are some"
 
-lang.choice('fruits.apple', 3);   
+lang.choice("fruits.apple", 3);
 // > "There are some"
 
-lang.choice('fruits.apple', 20);   
+lang.choice("fruits.apple", 20);
 // > "There are many"
 
-lang.choice('fruits.apple', 22);   
+lang.choice("fruits.apple", 22);
 // > "There are many
 ```
 
@@ -251,12 +251,11 @@ lang.choice('fruits.apple', 22);
 
 This method act as an alias of [`choice()`](#choice).
 
-
 ## Development
 
- 1. Fork this repository and clone it.
- 2. Create a branch from develop: `git checkout -b feature/xxxxxxx`
- 3. Submit a PR to be merge into develop branch.
+1.  Fork this repository and clone it.
+2.  Create a branch from develop: `git checkout -b feature/xxxxxxx`
+3.  Submit a PR to be merge into develop branch.
 
 **[Get help!](https://gitter.im/rmariuzzo/Lang.js)**
 
@@ -264,5 +263,5 @@ This method act as an alias of [`choice()`](#choice).
 
 To run the tests use the following commands:
 
- - Single run: `npm run test`
- - Run on changes: `npm run test:watch`
+- Single run: `npm run test`
+- Run on changes: `npm run test:watch`

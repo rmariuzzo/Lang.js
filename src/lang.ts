@@ -1,44 +1,44 @@
-import { Key, Messages, Options, Replacements, FlattenObject } from "./types";
+import { Key, Messages, Options, Replacements, FlattenObject } from './types'
 import {
   applyReplacements,
   testInterval,
   getPluralForm,
   inferLocale,
   flat
-} from "./utils";
+} from './utils'
 
-const DEFAULT_LOCALE = "en";
-const anyIntervalRegexp = /({\s*(\-?\d+(\.\d+)?[\s*,\s*\-?\d+(\.\d+)?]*)\s*})|([\[\]])\s*(-Inf|\*|\-?\d+(\.\d+)?)\s*,\s*(\+?Inf|\*|\-?\d+(\.\d+)?)\s*([\[\]])/;
+const DEFAULT_LOCALE = 'en'
+const anyIntervalRegexp = /({\s*(\-?\d+(\.\d+)?[\s*,\s*\-?\d+(\.\d+)?]*)\s*})|([\[\]])\s*(-Inf|\*|\-?\d+(\.\d+)?)\s*,\s*(\+?Inf|\*|\-?\d+(\.\d+)?)\s*([\[\]])/
 
 export default class Lang {
-  locale: string = null;
-  fallback: string = null;
-  messages: FlattenObject = null;
+  locale: string = null
+  fallback: string = null
+  messages: FlattenObject = null
 
   constructor(options: Options) {
-    this.locale = options.locale || inferLocale() || DEFAULT_LOCALE;
-    this.fallback = options.fallback;
-    this.setMessages(options.messages);
+    this.locale = options.locale || inferLocale() || DEFAULT_LOCALE
+    this.fallback = options.fallback
+    this.setMessages(options.messages)
   }
 
   setMessages(messages: Messages) {
-    this.messages = flat(messages);
+    this.messages = flat(messages)
   }
 
   getLocale(): string | null {
-    return this.locale;
+    return this.locale
   }
 
   setLocale(locale: string): void {
-    this.locale = locale;
+    this.locale = locale
   }
 
   getFallback(): string | null {
-    return this.fallback;
+    return this.fallback
   }
 
   setFallback(fallback: string): void {
-    this.fallback = fallback;
+    this.fallback = fallback
   }
 
   get(
@@ -47,27 +47,27 @@ export default class Lang {
     locale?: string
   ): string | null {
     if (!key) {
-      return null;
+      return null
     }
 
-    key = key.replace(/\//g, ".");
+    key = key.replace(/\//g, '.')
 
-    const { source, sourceFallback } = this._parseKey(key, locale);
-    let message = this.messages[source];
+    const { source, sourceFallback } = this._parseKey(key, locale)
+    let message = this.messages[source]
 
     if (message === undefined) {
-      message = this.messages[sourceFallback];
+      message = this.messages[sourceFallback]
 
       if (message === undefined) {
-        return key;
+        return key
       }
     }
 
     if (replacements) {
-      return applyReplacements(message, replacements);
+      return applyReplacements(message, replacements)
     }
 
-    return message;
+    return message
   }
 
   trans(
@@ -75,12 +75,12 @@ export default class Lang {
     replacements: Replacements,
     locale: string
   ): string | null {
-    return this.get(key, replacements, locale);
+    return this.get(key, replacements, locale)
   }
 
   has(key: string, locale: string): boolean {
-    const message = this.get(key, null, locale);
-    return message !== null && message !== key;
+    const message = this.get(key, null, locale)
+    return message !== null && message !== key
   }
 
   choice(
@@ -89,44 +89,44 @@ export default class Lang {
     replacements: Replacements = {},
     locale: string
   ): string | null {
-    replacements.count = number;
+    replacements.count = number
 
-    const message = this.get(key, replacements, locale);
+    const message = this.get(key, replacements, locale)
 
     if (message === null) {
-      return message;
+      return message
     }
 
-    const messageParts = message.split("|");
-    const explicitRules = [];
+    const messageParts = message.split('|')
+    const explicitRules = []
 
     for (let i = 0; i < messageParts.length; i++) {
-      messageParts[i] = messageParts[i].trim();
+      messageParts[i] = messageParts[i].trim()
 
       if (anyIntervalRegexp.test(messageParts[i])) {
-        const messageSpaceSplit = messageParts[i].split(/\s/);
-        explicitRules.push(messageSpaceSplit.shift());
-        messageParts[i] = messageSpaceSplit.join(" ");
+        const messageSpaceSplit = messageParts[i].split(/\s/)
+        explicitRules.push(messageSpaceSplit.shift())
+        messageParts[i] = messageSpaceSplit.join(' ')
       }
     }
 
     // Check if there's only one message
     if (messageParts.length === 1) {
       // Nothing to do here
-      return message;
+      return message
     }
 
     // Check the explicit rules
     for (let j = 0; j < explicitRules.length; j++) {
       if (testInterval(number, explicitRules[j])) {
-        return messageParts[j];
+        return messageParts[j]
       }
     }
 
-    locale = locale || this._getLocaleFromExistingMessage(key, locale);
-    var pluralForm = getPluralForm(number, locale);
+    locale = locale || this._getLocaleFromExistingMessage(key, locale)
+    var pluralForm = getPluralForm(number, locale)
 
-    return messageParts[pluralForm];
+    return messageParts[pluralForm]
   }
 
   transChoice(
@@ -135,29 +135,29 @@ export default class Lang {
     replacements: object,
     locale: string
   ): string | null {
-    return this.choice(key, number, replacements, locale);
+    return this.choice(key, number, replacements, locale)
   }
 
   _getLocaleFromExistingMessage(key: string, locale: string): string {
-    const keyObj = this._parseKey(key, locale);
+    const keyObj = this._parseKey(key, locale)
 
     if (this.messages[keyObj.source]) {
-      return this.locale;
+      return this.locale
     }
 
     if (this.messages[keyObj.sourceFallback]) {
-      return this.fallback;
+      return this.fallback
     }
 
-    return null;
+    return null
   }
 
   _parseKey(key: string, locale: string): Key {
-    key = key.replace(/\//g, ".");
+    key = key.replace(/\//g, '.')
 
     return {
       source: `${locale || this.locale}.${key}`,
       sourceFallback: `${this.fallback}.${key}`
-    };
+    }
   }
 }

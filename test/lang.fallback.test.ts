@@ -1,7 +1,7 @@
 import Lang from '../src/lang'
 const messages = require('./fixture/messages')
 
-describe('The lang\'s fallback locale feature', () => {
+describe("The lang's fallback locale feature", () => {
   let lang
 
   beforeEach(() => {
@@ -17,11 +17,11 @@ describe('The lang\'s fallback locale feature', () => {
     lang = new Lang({
       messages: {
         'en.greetings': {
-          'hi': 'Hi',
-          'hello': 'Hello'
+          hi: 'Hi',
+          hello: 'Hello'
         },
         'it.greetings': {
-          'hi': 'Salve'
+          hi: 'Salve'
         }
       }
     })
@@ -37,8 +37,8 @@ describe('The lang\'s fallback locale feature', () => {
     lang = new Lang({
       messages: {
         'en.greetings': {
-          'hi': 'Hi',
-          'hello': 'Hello'
+          hi: 'Hi',
+          hello: 'Hello'
         }
       }
     })

@@ -20,7 +20,7 @@ describe('The lang.has() method', () => {
     expect(lang.has('validation.accepted')).toBe(true)
   })
 
-  it('should return true when the given key and locale are defined',() => {
+  it('should return true when the given key and locale are defined', () => {
     expect(lang.has('messages.home', 'es')).toBe(true)
     expect(lang.has('messages.home', 'ht')).toBe(true)
   })

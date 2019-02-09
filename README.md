@@ -5,42 +5,48 @@
 ![NPM Montly Downloads](https://img.shields.io/npm/dm/lang.js.svg)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/rmariuzzo/Lang.js/master/LICENSE)
 
-## Installation
+<br>
+<br>
+<br>
 
-Different installation methods:
+# Installation
 
-- NPM: `npm install lang.js`
-- Bower: `bower install lang.js`
-- Manually: [Download latest release](https://github.com/rmariuzzo/Lang.js/releases/latest)
+- `npm install lang.js@next`
 
-## Documentation
+<br>
+<br>
+<br>
 
-### Initialization
+# Documentation
+
+## Initialization
 
 ```js
 var lang = new Lang({
-  messages: source,
-  locale: "fr",
-  fallback: "zn"
+  messages: source, // required
+  locale: "fr", // optional
+  fallback: "zn" // optional
 });
 ```
 
-To use `Lang.js` we need to specify at least the messages sources. This can be done during instantiation as shown in the previous code or later using the [`setMessages()`](#setmessages) method.
+<br>
+<br>
+<br>
 
-### Messages source format
+## Messages source format
 
-The messages source format looks like:
+The messages source format looks like this:
 
 ```js
 {
-    "locale1.name": {
-        "key1": "value1",
-        "key2": "value2",
+    "locale-1.mesages-name": {
+        "key-1": "value-1",
+        "key-2": "value-2",
         // ... and more key-value pairs.
     },
-    "locale2.name": {
-        "key1": "value1",
-        "key2": "value2",
+    "locale-2.mesages-name": {
+        "key-1": "value-1",
+        "key-2": "value-2",
         // ... and more key-value pairs.
     },
     // ... and more locales.
@@ -49,62 +55,45 @@ The messages source format looks like:
 
 See the sample used in tests located at: `test/fixture/messages.json`.
 
-### Methods
+## API
 
-#### `setMessages`
+### `setMessages`
 
 Set messages source. Check [messages source format](#messages-source-format).
 
 ```js
-var lang = new Lang();
 lang.setMessages(source);
 ```
 
-#### `getLocale`
+### `getLocale`
 
 Get the current locale, if none set, the default locale will be returned (`en`).
 
 ```js
-var lang = new Lang();
-
 lang.getLocale();
 // > "en"
-
-lang.setLocale("fr");
-lang.getLocale();
-// > "fr"
 ```
 
-#### `setLocale`
+### `setLocale`
 
 Set the current locale.
 
 ```js
-var lang = new Lang();
-
 lang.setLocale("ht");
-lang.getLocale();
-// > "ht"
 ```
 
-#### `getFallback`
+### `getFallback`
 
 Get the fallback locale.
 
 ```js
-var lang = new Lang();
-
 lang.getFallback();
-// > undefined
-
-lang.setFallback("de");
-lang.getFallback();
-// > "de"
+// > de
 ```
 
-#### `setFallback`
+### `setFallback`
 
-Set the fallback locale. When retrieving a message (using [`get()`](#get) or [`has()`](#has)) which is not defined in the specified locale, then it will try to find a message with the fallback locale (if set).
+Set the fallback locale for messages not found using the default locale.
 
 ```js
 var lang = new Lang({
@@ -128,96 +117,37 @@ lang.get("greetings.hello");
 // > "Hello"
 ```
 
-#### `has`
+### `has`
 
-Indicate if a given key is defined on the messages source. Return `true` if the key is defined on the messages source, otherwise `false`. This method will try to get a message for the specified locale, if not found, then it will return a message for the fallback locale, if not found, then `false` will be returned.
+Indicate if a given key is defined on the messages source.
 
 ```js
-var lang = new Lang({
-  messages: {
-    "en.greetings": {
-      hi: "Hi"
-    },
-    "es.greetings": {
-      hi: "Hola"
-    }
-  }
-});
-
 lang.has("greetings.hi");
-// > true
-
-lang.has("greetings.hi", "es");
-// > true
-
-lang.has("greetings.hello");
-// > false
 ```
 
-#### `get`
+### `get`
 
-Get a translation message if found, otherwise return the given key. This method will try to get a message for the specified locale, if not found, then it will return a message for the fallback locale, if not found, then the given key will be returned.
+Get a translation message.
 
 ```js
-var lang = new Lang({
-  messages: {
-    "en.greetings": {
-      hi: "Hi"
-    },
-    "es.greetings": {
-      hi: "Hola"
-    }
-  }
-});
-
 lang.get("greetings.hi");
-// > "Hi"
-
-lang.get("greetings.hi", {}, "es");
-// > "Hola"
-
-lang.get("greetings.hello");
-// > "greetings.hello"
+lang.get("forum/thread.hello");
 ```
 
-Get a translation file from a nested directory
-
-```js
-Lang.get("forum/thread.hello");
-// > "Hello"
-
-Lang.get("forum/thread.hello", {}, "es");
-// > "Hola"
-```
-
-#### `trans`
+### `trans`
 
 This method act as an alias of [`get()`](#get).
 
-#### `choice`
+### `choice`
 
 Get the plural or singular form of the message specified based on an integer value.
 
 ```js
-var lang = new Lang({
-  messages: {
-    "en.fruits": {
-      apple: "apple|apples"
-    },
-    "es.fruits": {
-      apple: "manzana|manzanas"
-    }
-  }
-});
-
 lang.choice("fruits.apple", 1);
 // > "apple"
 
 lang.choice("fruits.apple", 4);
 // > "apples"
-
-lang.choice("fruits.apple", 4, {}, "es");
-// > "manzanas"
 ```
 
 You may even create more complex pluralization rules which specify translation strings for multiple number ranges:
@@ -247,21 +177,32 @@ lang.choice("fruits.apple", 22);
 // > "There are many
 ```
 
-#### `transChoice`
+### `transChoice`
 
 This method act as an alias of [`choice()`](#choice).
 
-## Development
+<br>
+<br>
+<br>
+
+# Development
 
 1.  Fork this repository and clone it.
-2.  Create a branch from develop: `git checkout -b feature/xxxxxxx`
-3.  Submit a PR to be merge into develop branch.
+2.  Create a branch from `next` branch.
+3.  Submit a PR to be merge into `next` branch.
 
-**[Get help!](https://gitter.im/rmariuzzo/Lang.js)**
+<br>
+<br>
+<br>
 
-## Testing
+# Testing
 
 To run the tests use the following commands:
 
 - Single run: `npm run test`
-- Run on changes: `npm run test:watch`
+
+# Deployment
+
+We do deployment using `np`:
+
+- `np 2.0.0-beta.0 --tag=next --any-branch`

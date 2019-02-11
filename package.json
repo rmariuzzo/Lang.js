@@ -1,6 +1,6 @@
 {
     "name": "lang.js",
-    "version": "2.0.0-beta.0",
+    "version": "2.0.0-beta.1",
     "description": "Laravel's Lang in JavaScript!",
     "repository": "rmariuzzo/Lang.js",
     "license": "MIT",

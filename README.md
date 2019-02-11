@@ -24,9 +24,9 @@ npm install lang.js@next
 ```js
 var lang = new Lang({
   messages: source, // required
-  locale: "fr", // optional
-  fallback: "zn" // optional
-});
+  locale: 'fr', // optional
+  fallback: 'zn' // optional
+})
 ```
 
 ### Messages source format
@@ -60,7 +60,7 @@ See the sample used in tests located at: `test/fixture/messages.json`.
 Set messages source. Check [messages source format](#messages-source-format).
 
 ```js
-lang.setMessages(source);
+lang.setMessages(source)
 ```
 
 ### `getLocale`
@@ -68,7 +68,7 @@ lang.setMessages(source);
 Get the current locale, if none set, the default locale will be returned (`en`).
 
 ```js
-lang.getLocale();
+lang.getLocale()
 // > "en"
 ```
 
@@ -77,7 +77,7 @@ lang.getLocale();
 Set the current locale.
 
 ```js
-lang.setLocale("ht");
+lang.setLocale('ht')
 ```
 
 ### `getFallback`
@@ -85,7 +85,7 @@ lang.setLocale("ht");
 Get the fallback locale.
 
 ```js
-lang.getFallback();
+lang.getFallback()
 // > de
 ```
 
@@ -96,22 +96,22 @@ Set the fallback locale for messages not found using the default locale.
 ```js
 var lang = new Lang({
   messages: {
-    "en.greetings": {
-      hi: "Hi",
-      hello: "Hello"
+    'en.greetings': {
+      hi: 'Hi',
+      hello: 'Hello'
     },
-    "it.greetings": {
-      hi: "Salve"
+    'it.greetings': {
+      hi: 'Salve'
     }
   }
-});
+})
 
-lang.setLocale("it");
-lang.get("greetings.hello");
+lang.setLocale('it')
+lang.get('greetings.hello')
 // > "greetings.hello"
 
-lang.setFallback("en");
-lang.get("greetings.hello");
+lang.setFallback('en')
+lang.get('greetings.hello')
 // > "Hello"
 ```
 
@@ -120,7 +120,7 @@ lang.get("greetings.hello");
 Indicate if a given key is defined on the messages source.
 
 ```js
-lang.has("greetings.hi");
+lang.has('greetings.hi')
 ```
 
 ### `get`
@@ -128,8 +128,8 @@ lang.has("greetings.hi");
 Get a translation message.
 
 ```js
-lang.get("greetings.hi");
-lang.get("forum/thread.hello");
+lang.get('greetings.hi')
+lang.get('forum/thread.hello')
 ```
 
 ### `trans`
@@ -141,10 +141,10 @@ This method act as an alias of [`get()`](#get).
 Get the plural or singular form of the message specified based on an integer value.
 
 ```js
-lang.choice("fruits.apple", 1);
+lang.choice('fruits.apple', 1)
 // > "apple"
 
-lang.choice("fruits.apple", 4);
+lang.choice('fruits.apple', 4)
 // > "apples"
 ```
 
@@ -153,25 +153,25 @@ You may even create more complex pluralization rules which specify translation s
 ```js
 var lang = new Lang({
   messages: {
-    "en.fruits": {
-      apple: "{0} There are none|[1,19] There are some|[20,*] There are many"
+    'en.fruits': {
+      apple: '{0} There are none|[1,19] There are some|[20,*] There are many'
     }
   }
-});
+})
 
-lang.choice("fruits.apple", 0);
+lang.choice('fruits.apple', 0)
 // > "There are none"
 
-lang.choice("fruits.apple", 1);
+lang.choice('fruits.apple', 1)
 // > "There are some"
 
-lang.choice("fruits.apple", 3);
+lang.choice('fruits.apple', 3)
 // > "There are some"
 
-lang.choice("fruits.apple", 20);
+lang.choice('fruits.apple', 20)
 // > "There are many"
 
-lang.choice("fruits.apple", 22);
+lang.choice('fruits.apple', 22)
 // > "There are many
 ```
 
@@ -202,5 +202,6 @@ To run the tests use the following commands:
 We do deployment using `np`:
 
 ```bash
-np 2.0.0-beta.n --tag=next --any-branch
+npm run release:next
+npm run release:stable
 ```

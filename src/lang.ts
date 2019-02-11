@@ -13,16 +13,22 @@ const anyIntervalRegexp = /({\s*(\-?\d+(\.\d+)?[\s*,\s*\-?\d+(\.\d+)?]*)\s*})|([
 export default class Lang {
   locale: string = null
   fallback: string = null
-  messages: FlattenObject = null
+  messages: FlattenObject = {}
 
   constructor(options: Options) {
+    if (!options) {
+      throw new Error('options must be defined')
+    }
+
     this.locale = options.locale || inferLocale() || DEFAULT_LOCALE
     this.fallback = options.fallback
     this.setMessages(options.messages)
   }
 
   setMessages(messages: Messages) {
-    this.messages = flat(messages)
+    if (messages) {
+      this.messages = flat(messages)
+    }
   }
 
   getLocale(): string | null {

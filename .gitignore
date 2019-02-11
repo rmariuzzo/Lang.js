@@ -1,6 +1,7 @@
 node_modules
 npm-debug.log
+.size-snapshot.json
 cjs
 esm
 umd
-.size-snapshot.json
+lib

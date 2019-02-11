@@ -4,10 +4,8 @@ const messages = require('./fixture/messages')
 describe('The lang.choice() method', () => {
   let lang
 
-  beforeEach(function() {
-    lang = new Lang({
-      messages: messages
-    })
+  beforeEach(() => {
+    lang = new Lang({ messages })
   })
 
   it('should return the passed key when not found', () => {
@@ -36,12 +34,13 @@ describe('The lang.choice() method', () => {
       }
     })
     lang.setLocale('ru')
+
     expect(lang.choice('plural.year', 1)).toBe('1 год')
     expect(lang.choice('plural.year', 2)).toBe('2 года')
     expect(lang.choice('plural.year', 5)).toBe('5 лет')
   })
 
-  it('should return the expected message using math intervals', function() {
+  it('should return the expected message using math intervals', () => {
     lang.setMessages({
       'en.test': {
         set: '{0} a|{1} :count b|[2,Inf] :count c',
@@ -50,6 +49,7 @@ describe('The lang.choice() method', () => {
         infinityStar: '[*,-1] :count Negative|[0,*] :count Positive'
       }
     })
+
     expect(lang.choice('test.set', 0)).toBe('a')
     expect(lang.choice('test.set', 1)).toBe('1 b')
     expect(lang.choice('test.set', 2)).toBe('2 c')
@@ -79,12 +79,12 @@ describe('The lang.choice() method', () => {
     ).toBe('The foo must be accepted.')
   })
 
-  it('should return the expected message with changed locale', function() {
+  it('should return the expected message with changed locale', () => {
     expect(lang.choice('messages.home', 1)).toBe('Home')
     expect(lang.choice('messages.home', 1, {}, 'es')).toBe('Inicio')
   })
 
-  it('should return the expected message using the fallback language', function() {
+  it('should return the expected message using the fallback language', () => {
     lang.setMessages({
       'en.messages': {
         box: ':count box|:count boxes'

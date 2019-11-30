@@ -15,6 +15,7 @@
 Different installation methods:
 
  - NPM: `npm install lang.js`
+ - Yarn: `yarn add lang.js`
  - Bower: `bower install lang.js`
  - Manually: [Download latest release](https://github.com/rmariuzzo/Lang.js/releases/latest)
 

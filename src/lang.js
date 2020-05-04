@@ -272,6 +272,41 @@
      */
     Lang.prototype._getMessage = function(key, locale) {
         locale = locale || this.getLocale();
+        let originalLocale = locale;
+
+        // Handle the scenario where the tranlation string is used as the key.
+        // (https://laravel.com/docs/6.x/localization#using-translation-strings-as-keys)
+        // In this case the Key should be present at the root of the locale.
+        if (typeof(this.messages[locale]) === 'undefined') {
+              // The given locale does not have keys at the root, use the fallback instead.
+              locale = this.getFallback();
+        }
+
+        
+        // See if the key is defined.
+        if (typeof(this.messages[locale]) !== 'undefined') {
+            if (typeof(this.messages[locale][key]) !== 'undefined') {
+                return this.messages[locale][key];
+            }
+        }
+
+        //Try with the fallback as well. if we haven't looked there already.
+        if (locale === originalLocale) {
+            locale = this.getFallback();
+            if (typeof(this.messages[locale]) !== 'undefined') {
+                if (typeof(this.messages[locale][key]) !== 'undefined') {
+                    return this.messages[locale][key];
+                }
+            }
+        }
+
+        // If we reach here, that means the traslation key did not exist in the provided locale
+        // nor the fallback locale. At this point proceed as normal and expect the rest of the code
+        // to find a valid translation or return the key itself as the translation
+        // (which also takes care of 'Translation strings as key')
+
+        // Reset to the original locale.
+        locale = originalLocale;
         
         key = this._parseKey(key, locale);
 

@@ -216,5 +216,9 @@
     },
     "en.unique": {
         "samePrefixKeys": "Your order contains :items items with :itemsPapayas papayas and :itemsMangoes mangoes"
+    },
+    "es": {
+        "Hello": "Hola",
+        "Payment received. Thanks!": "Pago recibido. Gracias!"
     }
 }

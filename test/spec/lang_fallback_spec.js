@@ -58,4 +58,23 @@ describe('The lang\'s fallback locale feature', function() {
             lang.get('greetings.hello');
         }).not.toThrow();
     });
+
+    // JSON Translation string as keys
+    it('should return the fallback if tranlation is not availble.', function() {
+        var messages = {
+            'en': {
+                'Welcome': 'Welcome to the site.'
+            },
+            'es': {
+                'Hello': 'Hola',
+            }
+        };
+        lang = new Lang({
+            messages: messages
+        });
+        lang.setLocale('es');
+        lang.setFallback('en');
+        
+        expect(lang.get('Welcome', [], 'es')).toBe('Welcome to the site.');
+    })
 });

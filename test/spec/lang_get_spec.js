@@ -89,4 +89,13 @@ describe('The lang.get() method', function () {
             itemsMangoes: 2
         })).toBe('Your order contains 5 items with 3 papayas and 2 mangoes');
     });
+
+    // JSON Translation string as key
+    it('should return the spanish translation when a key exists', function() {
+        expect(lang.get('Hello', [], 'es')).toBe('Hola');
+    });
+
+    it('should return the spanish translation when a key exists and key contains a period (.)', function() {
+        expect(lang.get('Payment received. Thanks!', [], 'es')).toBe('Pago recibido. Gracias!');
+    });
 });

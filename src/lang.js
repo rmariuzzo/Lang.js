@@ -272,7 +272,7 @@
      */
     Lang.prototype._getMessage = function(key, locale) {
         locale = locale || this.getLocale();
-        let originalLocale = locale;
+        var originalLocale = locale;
 
         // Handle the scenario where the tranlation string is used as the key.
         // (https://laravel.com/docs/6.x/localization#using-translation-strings-as-keys)
